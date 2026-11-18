@@ -81,18 +81,7 @@ COURSES: dict[str, dict] = {
     },
 }
 
-# Skills that address each gap area; used for catalogue tags and, in Phase 2, for matching.
-AREA_SKILLS: dict[str, list[str]] = {
-    "content_coverage": ["curriculum planning", "course design"],
-    "content_currency": ["industry practice", "course design"],
-    "resources": ["learning materials", "digital tools"],
-    "video_delivery": ["video production", "digital tools"],
-    "session_delivery": ["time management", "curriculum planning"],
-    "assessment_feedback": ["assessment", "feedback"],
-    "student_engagement": ["active learning", "student engagement"],
-    "pedagogy": ["pedagogy", "active learning"],
-    "technical_skill": ["subject expertise"],
-}
+from smartep.contracts.area_text import AREA_SKILLS  # noqa: E402,F401  (re-exported for the generator)
 
 
 def _entry(ref, source, title, provider, description, skills, level, mode, cost, duration, url):

@@ -2,6 +2,42 @@
 
 One entry per design decision: what was decided, and why. Feeds the methodology chapter.
 
+## 2026-11-18 · Phase 2: MVP gap model v0.1
+
+Model card: `docs/model-card-v0.1.md`. Bundle `artifacts/gap-xgb-20261118T122125Z-d7dc5b` (registry champion).
+
+| Decision | Why |
+|---|---|
+| Grouped 5-fold CV × 5 seeds on the train pool, plus the 501-package `classroom_test` subset as an untouched holdout | Replaces the planned single 70/15/15 split: out-of-fold predictions cover all 4,599 rows (larger groups for fairness), seeds give a spread, and the holdout gives one clean estimate |
+| Early stopping, isotonic calibration, thresholds and severity cut-points fitted on a grouped 15% validation split inside each training fold | Nothing tuned on the rows it is scored on |
+| Hyperparameters fixed (depth 3, lr 0.05, ≤ 600 trees with early stopping), no grid search | CV sd is 0.001 and early stopping sets tree counts; a grid would add little and, without nesting, bias the estimate |
+| Text: MiniLM embeddings of comments, notes and transcripts (16 PCA components each); cached to `~/.cache/smartep/` | Workplan choice; caching cuts re-runs from ~20 min to a few minutes |
+| Seniority, discipline and institution type are not model inputs | Kept only for the fairness audit |
+| Evidence: SHAP drivers mapped to package records, **area-relevant families first** (e.g. coverage → plan items) | First version ranked by SHAP alone and cited correlated but irrelevant records (coverage hit rate 0.00); relevance follows from the area definitions, not from generator rules |
+| Evidence scored against **all** qualifying records, not the 3 stored per gap | The stored list is truncated; a different lesson that also lacks notes is correct evidence |
+| Fairness flag from a **95% interval on each pairwise group difference**; FAIL only if the interval lies wholly above 0.10, WARN on the point estimate | The max-minus-min spread grows with noise in small groups (TVET ~70 positives per area, SE ≈ 0.06), so the point rule failed an unbiased generator; a bootstrap of the spread is biased upward too |
+| Results built and validated as AssessmentResult in `smartep/serve/predict.py` | Same code path as Phase 3 serving; an invalid result raises instead of being sent |
+| Catalogue matcher: skill-tag overlap (0.7) + TF-IDF similarity (0.3), filtered by preferred mode and budget | Simple, explainable, and cannot return a catalogueRef outside the snapshot |
+
+**Results (G2 passed).** CV macro AUC 0.811 ± 0.001 (holdout 0.821); lowest area 0.778; worst-area ECE
+0.032; evidence coverage 100%, hit rate 0.744 (holdout 0.776); all 501 holdout results valid; 0 fairness
+FAIL flags in all seeds (4–10 WARN, small groups). Severity is weak: 0.424 exact match vs 0.395 baseline.
+
+**Experiments.**
+
+| Run | Macro AUC (CV, seed 42) | Worst ECE | Evidence hit rate | Fairness |
+|---|---|---|---|---|
+| v0.1 (MiniLM text) | 0.809 | 0.033 | 0.744 | 0 FAIL, 4 WARN |
+| No text features | 0.810 | 0.040 | 0.700 | 0 FAIL, 3 WARN |
+| Injected bias (`seniority_digital_effect: 1.0`, TF-IDF text) | 0.820 | 0.033 | 0.791 | **3 FAIL**, all seniority: content_currency, resources, video_delivery |
+
+- Text features add no discrimination on this synthetic data and only a little calibration and evidence
+  quality. Open question for the MVP: keep MiniLM (90 MB model, slower first run) or serve without it
+  (workplan cut list item 3).
+- The audit FAILs exactly where bias was injected (digital skill → the three digital-skill areas, for
+  seniority only) and stays clean for discipline and institution type, so the interval rule still detects
+  a real disparity.
+
 ## 2026-11-18 · Phase 1: synthetic data generator v2
 
 Details and every rule: `docs/data-sheet-synthetic-v2.md`.

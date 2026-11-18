@@ -1,8 +1,9 @@
 # smartep-model
 
 The SMARTEP model: predicts educator gaps from The Classroom's evidence packages and recommends reskilling.
-Workplan: `DOCS/SMARTEP Model Development Workplan (Nov 2026 - Jun 2027).docx`. Phase 0 (refactor of the Colab
-baseline) and **Phase 1** (synthetic data generator v2) are done; Phase 2 (MVP gap model) is next.
+Workplan: `DOCS/SMARTEP Model Development Workplan (Nov 2026 - Jun 2027).docx`. Phases 0 (refactor), 1 (synthetic
+data generator v2) and **2 (MVP gap model v0.1)** are done; Phase 3 (serving and integration) is next.
+Model card: `docs/model-card-v0.1.md`.
 
 ## Setup
 
@@ -23,6 +24,8 @@ Extras: `research` (torch), `text` (MiniLM sentence embeddings), `tracking` (MLf
 
 ```bash
 python -m uv run python -m pipelines.generate_data --config configs/generator.yaml   # 5,100 packages + G1 checks (~3 min)
+python -m uv sync --extra dev --extra research --extra text                          # MiniLM for the gap model
+python -m uv run python -m pipelines.train --config configs/gap_model.yaml --promote-on-new-data   # model v0.1 (~12 min first run)
 python -m uv run python -m pipelines.train --config configs/train_xgb.yaml
 python -m uv run python -m pipelines.train --config configs/train_fusion.yaml
 python -m uv run python -m pipelines.train --config configs/train_xgb.yaml --set data.n_educators=500 --set seed=7
@@ -52,13 +55,17 @@ python -m uv run python scripts/export_schemas.py   # after changing a contract
 | `smartep/evaluate/` | Metrics, fairness audit, gates, personas, pilot measures (SUS, competency gain), report |
 | `smartep/recommend/` | LinUCB bandit, fairness re-ranking, ranking metrics |
 | `smartep/registry/` | Model bundles and champion/challenger promotion |
-| `pipelines/train.py` | The one training command |
+| `smartep/training/gap_model.py` | Gap model: CV, calibration, thresholds, severity, evidence and fairness scoring, bundle |
+| `smartep/serve/predict.py` | Evidence package in, validated AssessmentResult out |
+| `pipelines/train.py` | The one training command (legacy or gap model, by `data.source`) |
 | `docs/decision-log.md` | Design decisions per phase, and why |
 | `docs/data-sheet-synthetic-v2.md` | Every generator rule, label rule, G1 result and limitation |
 
 ## Status of results
 
-- `pipelines.train` still uses the Phase 0 data source (`legacy_colab`), whose labels are random, so test
-  AUC near 0.5 is the expected result there. Phase 2 switches training to generator v2.
+- Gap model v0.1 (`configs/gap_model.yaml`) passes gate G2: CV macro AUC 0.811 ± 0.001, holdout 0.821,
+  worst-area ECE 0.032, evidence hit rate 0.74, no fairness failures. Synthetic and unvalidated.
+- The Phase 0 configs (`train_xgb.yaml`, `train_fusion.yaml`) still use the legacy Colab data, whose labels
+  are random, so AUC near 0.5 is expected there.
 - Generator v2 passes gate G1: oracle AUC 0.916, structured-feature probe 0.827, noise 0.501 (data sheet §4).
   These are synthetic results: they test the pipeline, not usefulness with real educators.

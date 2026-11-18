@@ -24,6 +24,24 @@ def tune_thresholds(P_val: np.ndarray, Y_val: np.ndarray, grid=DEFAULT_GRID, def
     return thresholds
 
 
+def tune_severity_cuts(p: np.ndarray, true_severity: np.ndarray, threshold: float,
+                       default: tuple[float, float] = (0.65, 0.8), min_rows: int = 15) -> tuple[float, float]:
+    """Band cut-points (c1 <= c2) that best reproduce the true severity of real gaps above the threshold."""
+    mask = (true_severity != "") & (p >= threshold)
+    if mask.sum() < min_rows:
+        return max(default[0], threshold), max(default[1], threshold)
+    ps, truth = p[mask], true_severity[mask]
+    grid = np.unique(np.round(np.quantile(ps, np.linspace(0, 1, 21)), 4))
+    best, best_acc = (max(default[0], threshold), max(default[1], threshold)), -1.0
+    for i, c1 in enumerate(grid):
+        for c2 in grid[i:]:
+            pred = np.where(ps >= c2, "high", np.where(ps >= c1, "medium", "low"))
+            acc = float((pred == truth).mean())
+            if acc > best_acc:
+                best, best_acc = (float(c1), float(c2)), acc
+    return best
+
+
 def severity(prob: float, threshold: float, bands: tuple[float, float] = (0.65, 0.8)) -> str | None:
     """None below the threshold; otherwise low / medium / high by probability band."""
     if prob < threshold:

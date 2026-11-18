@@ -32,22 +32,23 @@ def _f(x) -> float | None:
     return None if x is None else round(float(x), 4)
 
 
-def label_metrics(Y: np.ndarray, P_raw: np.ndarray, P_cal: np.ndarray, thresholds: np.ndarray,
-                  labels: list[str]) -> dict[str, dict]:
+def label_metrics(Y: np.ndarray, P_raw: np.ndarray, P_cal: np.ndarray, thresholds: np.ndarray | None,
+                  labels: list[str], pred: np.ndarray | None = None) -> dict[str, dict]:
+    """``pred`` (0/1) overrides thresholding, e.g. for out-of-fold predictions made with per-fold thresholds."""
     out = {}
     for j, label in enumerate(labels):
         y = Y[:, j].astype(int)
-        pred = (P_cal[:, j] >= thresholds[j]).astype(int)
+        pred_j = pred[:, j].astype(int) if pred is not None else (P_cal[:, j] >= thresholds[j]).astype(int)
         two_classes = len(np.unique(y)) > 1
         out[label] = {
             "prevalence": _f(y.mean()),
             "auc": _f(roc_auc_score(y, P_raw[:, j])) if two_classes else None,
             "pr_auc": _f(average_precision_score(y, P_raw[:, j])) if two_classes else None,
-            "threshold": _f(thresholds[j]),
-            "precision": _f(precision_score(y, pred, zero_division=0)),
-            "recall": _f(recall_score(y, pred, zero_division=0)),
-            "f1": _f(f1_score(y, pred, zero_division=0)),
-            "positive_rate": _f(pred.mean()),
+            "threshold": _f(thresholds[j]) if thresholds is not None else None,
+            "precision": _f(precision_score(y, pred_j, zero_division=0)),
+            "recall": _f(recall_score(y, pred_j, zero_division=0)),
+            "f1": _f(f1_score(y, pred_j, zero_division=0)),
+            "positive_rate": _f(pred_j.mean()),
             "ece_raw": _f(expected_calibration_error(y, P_raw[:, j])),
             "ece_calibrated": _f(expected_calibration_error(y, P_cal[:, j])),
             "brier_calibrated": _f(brier_score_loss(y, P_cal[:, j])),

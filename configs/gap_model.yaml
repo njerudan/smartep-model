@@ -1,0 +1,47 @@
+# MVP gap model v0.1 (workplan Phase 2): multi-label XGBoost on generator v2 evidence packages.
+run_name: gap-xgb
+model_name: smartep-gap-xgb
+seed: 42
+
+data:
+  source: synthetic_v2
+  dir: data/synthetic_v2/415ad6b46559     # python -m pipelines.generate_data --config configs/generator.yaml
+
+cv:
+  folds: 5
+  seeds: [42, 43, 44, 45, 46]
+  val_size: 0.15            # grouped validation split inside each training fold
+  evidence_sample_per_area: 150   # predicted gaps per area and fold scored for evidence (seed 1 only)
+
+features:
+  text:
+    encoder: minilm         # minilm (needs the "text" extra) | tfidf_svd | none
+    dim: 16                 # per text group (comments, notes, transcripts)
+    cache_path: ~/.cache/smartep/minilm-embeddings.pkl   # outside OneDrive; speeds up re-runs
+
+models:
+  xgb:
+    n_estimators: 600
+    max_depth: 3
+    learning_rate: 0.05
+    subsample: 0.8
+    colsample_bytree: 0.8
+    min_child_weight: 2
+    early_stopping_rounds: 40
+
+calibration:
+  method: isotonic
+
+fairness:                   # groups: seniority, discipline, institution_type
+  max_disparity: 0.10
+  # FAIL only when a pair of groups differs by more than the limit with 95% confidence
+
+gates:                      # G2
+  macro_auc: 0.70
+  min_label_auc: 0.65
+  max_ece: 0.05
+  evidence_coverage: 1.0
+
+output:
+  dir: artifacts
+  n_examples: 5

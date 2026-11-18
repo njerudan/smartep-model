@@ -93,6 +93,15 @@ def _train_fusion(cfg, tables, ids, split, X_tab, X_text, Y, labels, seed):
 
 
 def run(cfg: dict, output_dir: Path, promote_on_new_data: bool = False) -> dict:
+    if cfg["data"]["source"] == "synthetic_v2":
+        from smartep.training.gap_model import run_gap_model
+
+        return run_gap_model(cfg, output_dir, promote_on_new_data)
+    return run_legacy(cfg, output_dir, promote_on_new_data)
+
+
+def run_legacy(cfg: dict, output_dir: Path, promote_on_new_data: bool = False) -> dict:
+    """Phase 0 baseline on the Colab simulation (configs/train_xgb.yaml, configs/train_fusion.yaml)."""
     timer = Timer()
     seed = int(cfg["seed"])
     set_seeds(seed)
@@ -249,7 +258,7 @@ def main(argv=None) -> None:
     cfg = load_config(args.config, args.set)
     out = Path(args.output_dir or cfg["output"]["dir"])
     summary = run(cfg, out, args.promote_on_new_data)
-    print(json.dumps({"version": summary["version"], "gates": summary["gates"],
+    print(json.dumps({"version": summary["version"], "gates": {k: g["pass"] for k, g in summary["gates"].items()},
                       "runtime_seconds": summary["runtime_seconds"]}, indent=2))
 
 

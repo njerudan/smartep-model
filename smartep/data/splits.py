@@ -38,6 +38,25 @@ def grouped_split(groups, val_size: float, test_size: float, seed: int) -> Split
     return Split(train=train, val=val, test=test)
 
 
+def grouped_kfold(groups, k: int, seed: int) -> list[np.ndarray]:
+    """``k`` folds of row indices; every group lands in exactly one fold."""
+    groups = np.asarray(groups)
+    perm = np.random.default_rng(seed).permutation(np.unique(groups))
+    fold_of = {g: i % k for i, g in enumerate(perm)}
+    assignment = np.array([fold_of[g] for g in groups])
+    return [np.flatnonzero(assignment == f) for f in range(k)]
+
+
+def grouped_holdout(groups, idx: np.ndarray, holdout_size: float, seed: int) -> tuple[np.ndarray, np.ndarray]:
+    """Split the rows ``idx`` into (keep, holdout) by group."""
+    groups = np.asarray(groups)
+    sub = np.unique(groups[idx])
+    perm = np.random.default_rng(seed).permutation(sub)
+    held = set(perm[:max(1, round(len(sub) * holdout_size))])
+    mask = np.array([g in held for g in groups[idx]])
+    return idx[~mask], idx[mask]
+
+
 def frame_hash(*frames: pd.DataFrame) -> str:
     """Stable fingerprint of the dataset a model was trained on."""
     h = hashlib.sha256()
