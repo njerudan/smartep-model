@@ -1,0 +1,42 @@
+run_name: gap-xgb
+model_name: smartep-gap-xgb
+seed: 42
+data:
+  source: synthetic_v2
+  dir: data/synthetic_v2/415ad6b46559
+cv:
+  folds: 5
+  seeds:
+  - 42
+  - 43
+  - 44
+  - 45
+  - 46
+  val_size: 0.15
+  evidence_sample_per_area: 150
+features:
+  text:
+    encoder: tfidf_svd
+    dim: 16
+    cache_path: ~/.cache/smartep/minilm-embeddings.pkl
+models:
+  xgb:
+    n_estimators: 600
+    max_depth: 3
+    learning_rate: 0.05
+    subsample: 0.8
+    colsample_bytree: 0.8
+    min_child_weight: 2
+    early_stopping_rounds: 40
+calibration:
+  method: isotonic
+fairness:
+  max_disparity: 0.1
+gates:
+  macro_auc: 0.7
+  min_label_auc: 0.65
+  max_ece: 0.05
+  evidence_coverage: 1.0
+output:
+  dir: artifacts
+  n_examples: 5

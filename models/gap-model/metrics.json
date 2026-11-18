@@ -1,0 +1,1173 @@
+{
+  "version": "gap-xgb-20261118T130130Z-3f9573",
+  "config_hash": "3f957395f194",
+  "data_hash": "415ad6b46559",
+  "manifest": {
+    "version": "gap-xgb-20261118T130130Z-3f9573",
+    "model_name": "smartep-gap-xgb",
+    "config_hash": "3f957395f194",
+    "data_hash": "415ad6b46559",
+    "data_dir": "data\\synthetic_v2\\415ad6b46559",
+    "generator_version": "2.0.0",
+    "git_commit": "9f829d5-dirty",
+    "labels": [
+      "content_coverage",
+      "content_currency",
+      "resources",
+      "video_delivery",
+      "session_delivery",
+      "assessment_feedback",
+      "student_engagement",
+      "pedagogy",
+      "technical_skill"
+    ],
+    "feature_names": [
+      "plan_present",
+      "plan_approved",
+      "plan_item_coverage",
+      "required_notes_coverage",
+      "required_video_coverage",
+      "delivery_ratio",
+      "contact_minutes_ratio",
+      "unknown_status_share",
+      "notes_share",
+      "notes_late_share",
+      "notes_mean_words",
+      "slides_share",
+      "documents_per_lesson",
+      "document_age_years_mean",
+      "attendance_rate",
+      "videos_per_lesson",
+      "video_completion_mean",
+      "video_furthest_median_mean",
+      "video_viewer_share",
+      "video_transcript_share",
+      "video_hosted_share",
+      "assignments_graded",
+      "grading_turnaround_hours",
+      "questions_answered_72h_rate",
+      "questions_per_student",
+      "evaluation_response_rate",
+      "evaluation_below_threshold_share",
+      "likert_clarity_mean",
+      "likert_organisation_mean",
+      "likert_feedback_mean",
+      "likert_engagement_mean",
+      "likert_resources_mean",
+      "likert_overall_mean",
+      "comments_per_response",
+      "enrolled_students",
+      "n_previous_packages",
+      "text_comments_0",
+      "text_comments_1",
+      "text_comments_2",
+      "text_comments_3",
+      "text_comments_4",
+      "text_comments_5",
+      "text_comments_6",
+      "text_comments_7",
+      "text_comments_8",
+      "text_comments_9",
+      "text_comments_10",
+      "text_comments_11",
+      "text_comments_12",
+      "text_comments_13",
+      "text_comments_14",
+      "text_comments_15",
+      "text_notes_0",
+      "text_notes_1",
+      "text_notes_2",
+      "text_notes_3",
+      "text_notes_4",
+      "text_notes_5",
+      "text_notes_6",
+      "text_notes_7",
+      "text_notes_8",
+      "text_notes_9",
+      "text_notes_10",
+      "text_notes_11",
+      "text_notes_12",
+      "text_notes_13",
+      "text_notes_14",
+      "text_notes_15",
+      "text_transcripts_0",
+      "text_transcripts_1",
+      "text_transcripts_2",
+      "text_transcripts_3",
+      "text_transcripts_4",
+      "text_transcripts_5",
+      "text_transcripts_6",
+      "text_transcripts_7",
+      "text_transcripts_8",
+      "text_transcripts_9",
+      "text_transcripts_10",
+      "text_transcripts_11",
+      "text_transcripts_12",
+      "text_transcripts_13",
+      "text_transcripts_14",
+      "text_transcripts_15"
+    ],
+    "libraries": {
+      "python": "3.11.18",
+      "numpy": "2.4.6",
+      "pandas": "3.1.1",
+      "scikit-learn": "1.9.1",
+      "xgboost": "3.2.0",
+      "pydantic": "2.14.3",
+      "torch": "2.15.0+cpu"
+    },
+    "training_data": "synthetic",
+    "validated": false
+  },
+  "data": {
+    "dir": "data\\synthetic_v2\\415ad6b46559",
+    "train_pool": 4599,
+    "holdout": 501
+  },
+  "cv": {
+    "folds": 5,
+    "seeds": [
+      42,
+      43,
+      44,
+      45,
+      46
+    ],
+    "macro_auc": {
+      "mean": 0.8113,
+      "sd": 0.0006
+    },
+    "macro_pr_auc": {
+      "mean": 0.5368,
+      "sd": 0.0021
+    },
+    "macro_f1": {
+      "mean": 0.5431,
+      "sd": 0.0038
+    },
+    "max_ece": {
+      "mean": 0.0326,
+      "sd": 0.0041
+    },
+    "worst_disparity": {
+      "mean": 0.1664,
+      "sd": 0.0094
+    },
+    "fairness_fail_flags": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "fairness_warn_flags": [
+      7,
+      3,
+      8,
+      4,
+      6
+    ],
+    "severity_accuracy": {
+      "mean": 0.426,
+      "sd": 0.0083
+    },
+    "severity_majority_baseline": 0.3942,
+    "per_label": {
+      "content_coverage": {
+        "auc": {
+          "mean": 0.7797,
+          "sd": 0.0029
+        },
+        "pr_auc": {
+          "mean": 0.4669,
+          "sd": 0.006
+        },
+        "precision": {
+          "mean": 0.4329,
+          "sd": 0.019
+        },
+        "recall": {
+          "mean": 0.6117,
+          "sd": 0.0301
+        },
+        "f1": {
+          "mean": 0.5062,
+          "sd": 0.0069
+        },
+        "ece_calibrated": {
+          "mean": 0.0221,
+          "sd": 0.0043
+        }
+      },
+      "content_currency": {
+        "auc": {
+          "mean": 0.8163,
+          "sd": 0.0014
+        },
+        "pr_auc": {
+          "mean": 0.5544,
+          "sd": 0.0038
+        },
+        "precision": {
+          "mean": 0.481,
+          "sd": 0.0205
+        },
+        "recall": {
+          "mean": 0.6278,
+          "sd": 0.0358
+        },
+        "f1": {
+          "mean": 0.5438,
+          "sd": 0.0082
+        },
+        "ece_calibrated": {
+          "mean": 0.0253,
+          "sd": 0.0063
+        }
+      },
+      "resources": {
+        "auc": {
+          "mean": 0.8153,
+          "sd": 0.0015
+        },
+        "pr_auc": {
+          "mean": 0.609,
+          "sd": 0.0048
+        },
+        "precision": {
+          "mean": 0.5094,
+          "sd": 0.0126
+        },
+        "recall": {
+          "mean": 0.6593,
+          "sd": 0.037
+        },
+        "f1": {
+          "mean": 0.5741,
+          "sd": 0.0109
+        },
+        "ece_calibrated": {
+          "mean": 0.03,
+          "sd": 0.0042
+        }
+      },
+      "video_delivery": {
+        "auc": {
+          "mean": 0.8015,
+          "sd": 0.0014
+        },
+        "pr_auc": {
+          "mean": 0.579,
+          "sd": 0.0065
+        },
+        "precision": {
+          "mean": 0.5326,
+          "sd": 0.0303
+        },
+        "recall": {
+          "mean": 0.6562,
+          "sd": 0.0384
+        },
+        "f1": {
+          "mean": 0.5865,
+          "sd": 0.0076
+        },
+        "ece_calibrated": {
+          "mean": 0.0286,
+          "sd": 0.006
+        }
+      },
+      "session_delivery": {
+        "auc": {
+          "mean": 0.8196,
+          "sd": 0.001
+        },
+        "pr_auc": {
+          "mean": 0.4592,
+          "sd": 0.0051
+        },
+        "precision": {
+          "mean": 0.4147,
+          "sd": 0.0112
+        },
+        "recall": {
+          "mean": 0.5542,
+          "sd": 0.0466
+        },
+        "f1": {
+          "mean": 0.4733,
+          "sd": 0.0113
+        },
+        "ece_calibrated": {
+          "mean": 0.0179,
+          "sd": 0.003
+        }
+      },
+      "assessment_feedback": {
+        "auc": {
+          "mean": 0.8038,
+          "sd": 0.0005
+        },
+        "pr_auc": {
+          "mean": 0.5851,
+          "sd": 0.0099
+        },
+        "precision": {
+          "mean": 0.4979,
+          "sd": 0.0166
+        },
+        "recall": {
+          "mean": 0.7063,
+          "sd": 0.0341
+        },
+        "f1": {
+          "mean": 0.5834,
+          "sd": 0.006
+        },
+        "ece_calibrated": {
+          "mean": 0.0253,
+          "sd": 0.0062
+        }
+      },
+      "student_engagement": {
+        "auc": {
+          "mean": 0.8413,
+          "sd": 0.0013
+        },
+        "pr_auc": {
+          "mean": 0.5859,
+          "sd": 0.0022
+        },
+        "precision": {
+          "mean": 0.5123,
+          "sd": 0.0213
+        },
+        "recall": {
+          "mean": 0.6516,
+          "sd": 0.0399
+        },
+        "f1": {
+          "mean": 0.5725,
+          "sd": 0.0058
+        },
+        "ece_calibrated": {
+          "mean": 0.0211,
+          "sd": 0.0034
+        }
+      },
+      "pedagogy": {
+        "auc": {
+          "mean": 0.8149,
+          "sd": 0.0021
+        },
+        "pr_auc": {
+          "mean": 0.546,
+          "sd": 0.0036
+        },
+        "precision": {
+          "mean": 0.4785,
+          "sd": 0.0207
+        },
+        "recall": {
+          "mean": 0.671,
+          "sd": 0.0301
+        },
+        "f1": {
+          "mean": 0.5578,
+          "sd": 0.0058
+        },
+        "ece_calibrated": {
+          "mean": 0.0196,
+          "sd": 0.0054
+        }
+      },
+      "technical_skill": {
+        "auc": {
+          "mean": 0.8089,
+          "sd": 0.0032
+        },
+        "pr_auc": {
+          "mean": 0.4452,
+          "sd": 0.0089
+        },
+        "precision": {
+          "mean": 0.4406,
+          "sd": 0.0107
+        },
+        "recall": {
+          "mean": 0.5538,
+          "sd": 0.0296
+        },
+        "f1": {
+          "mean": 0.4902,
+          "sd": 0.0057
+        },
+        "ece_calibrated": {
+          "mean": 0.0214,
+          "sd": 0.0046
+        }
+      }
+    },
+    "evidence": {
+      "coverage": 1.0,
+      "hit_rate": 0.765,
+      "true_positive_gaps": 3183,
+      "hit_rate_per_area": {
+        "content_coverage": 0.5968,
+        "content_currency": 0.5921,
+        "resources": 0.2285,
+        "video_delivery": 0.8978,
+        "session_delivery": 0.9748,
+        "assessment_feedback": 0.9429,
+        "student_engagement": 0.9894,
+        "pedagogy": 0.9424,
+        "technical_skill": 0.6837
+      }
+    },
+    "fairness_seed0": {
+      "by_group": {
+        "seniority": {
+          "worst_selection_disparity": 0.0568,
+          "worst_equal_opportunity_diff": 0.1493,
+          "failed_labels": [],
+          "warned_labels": [
+            "pedagogy",
+            "technical_skill"
+          ],
+          "per_label": [
+            {
+              "label": "content_coverage",
+              "selection_disparity": 0.0301,
+              "selection_ci": [
+                -0.0021,
+                0.0623
+              ],
+              "equal_opportunity_diff": 0.0739,
+              "equal_opportunity_ci": [
+                -0.0016,
+                0.1495
+              ],
+              "flag": "PASS"
+            },
+            {
+              "label": "content_currency",
+              "selection_disparity": 0.0397,
+              "selection_ci": [
+                -0.0073,
+                0.0867
+              ],
+              "equal_opportunity_diff": 0.0067,
+              "equal_opportunity_ci": [
+                -0.0707,
+                0.0795
+              ],
+              "flag": "PASS"
+            },
+            {
+              "label": "resources",
+              "selection_disparity": 0.0217,
+              "selection_ci": [
+                -0.0174,
+                0.0574
+              ],
+              "equal_opportunity_diff": 0.0728,
+              "equal_opportunity_ci": [
+                -0.0027,
+                0.1482
+              ],
+              "flag": "PASS"
+            },
+            {
+              "label": "video_delivery",
+              "selection_disparity": 0.0295,
+              "selection_ci": [
+                -0.018,
+                0.076
+              ],
+              "equal_opportunity_diff": 0.0771,
+              "equal_opportunity_ci": [
+                -0.0017,
+                0.156
+              ],
+              "flag": "PASS"
+            },
+            {
+              "label": "session_delivery",
+              "selection_disparity": 0.0288,
+              "selection_ci": [
+                0.0019,
+                0.0556
+              ],
+              "equal_opportunity_diff": 0.0164,
+              "equal_opportunity_ci": [
+                -0.0729,
+                0.1036
+              ],
+              "flag": "PASS"
+            },
+            {
+              "label": "assessment_feedback",
+              "selection_disparity": 0.0252,
+              "selection_ci": [
+                -0.0107,
+                0.0563
+              ],
+              "equal_opportunity_diff": 0.0464,
+              "equal_opportunity_ci": [
+                -0.0328,
+                0.0888
+              ],
+              "flag": "PASS"
+            },
+            {
+              "label": "student_engagement",
+              "selection_disparity": 0.0326,
+              "selection_ci": [
+                0.0019,
+                0.0632
+              ],
+              "equal_opportunity_diff": 0.0103,
+              "equal_opportunity_ci": [
+                -0.0636,
+                0.084
+              ],
+              "flag": "PASS"
+            },
+            {
+              "label": "pedagogy",
+              "selection_disparity": 0.0568,
+              "selection_ci": [
+                0.0204,
+                0.0932
+              ],
+              "equal_opportunity_diff": 0.1329,
+              "equal_opportunity_ci": [
+                0.0176,
+                0.2482
+              ],
+              "flag": "WARN"
+            },
+            {
+              "label": "technical_skill",
+              "selection_disparity": 0.0532,
+              "selection_ci": [
+                0.0266,
+                0.0799
+              ],
+              "equal_opportunity_diff": 0.1493,
+              "equal_opportunity_ci": [
+                0.06,
+                0.2386
+              ],
+              "flag": "WARN"
+            }
+          ]
+        },
+        "discipline": {
+          "worst_selection_disparity": 0.0722,
+          "worst_equal_opportunity_diff": 0.0757,
+          "failed_labels": [],
+          "warned_labels": [],
+          "per_label": [
+            {
+              "label": "content_coverage",
+              "selection_disparity": 0.0357,
+              "selection_ci": [
+                -0.012,
+                0.0526
+              ],
+              "equal_opportunity_diff": 0.0745,
+              "equal_opportunity_ci": [
+                -0.0059,
+                0.139
+              ],
+              "flag": "PASS"
+            },
+            {
+              "label": "content_currency",
+              "selection_disparity": 0.0722,
+              "selection_ci": [
+                0.0312,
+                0.0905
+              ],
+              "equal_opportunity_diff": 0.0588,
+              "equal_opportunity_ci": [
+                -0.0193,
+                0.1369
+              ],
+              "flag": "PASS"
+            },
+            {
+              "label": "resources",
+              "selection_disparity": 0.034,
+              "selection_ci": [
+                -0.0153,
+                0.0833
+              ],
+              "equal_opportunity_diff": 0.0267,
+              "equal_opportunity_ci": [
+                -0.049,
+                0.0824
+              ],
+              "flag": "PASS"
+            },
+            {
+              "label": "video_delivery",
+              "selection_disparity": 0.0431,
+              "selection_ci": [
+                0.0044,
+                0.0648
+              ],
+              "equal_opportunity_diff": 0.0253,
+              "equal_opportunity_ci": [
+                -0.0461,
+                0.0968
+              ],
+              "flag": "PASS"
+            },
+            {
+              "label": "session_delivery",
+              "selection_disparity": 0.0512,
+              "selection_ci": [
+                0.0124,
+                0.0899
+              ],
+              "equal_opportunity_diff": 0.0259,
+              "equal_opportunity_ci": [
+                -0.0757,
+                0.0965
+              ],
+              "flag": "PASS"
+            },
+            {
+              "label": "assessment_feedback",
+              "selection_disparity": 0.0258,
+              "selection_ci": [
+                -0.0135,
+                0.0535
+              ],
+              "equal_opportunity_diff": 0.0222,
+              "equal_opportunity_ci": [
+                -0.0385,
+                0.0829
+              ],
+              "flag": "PASS"
+            },
+            {
+              "label": "student_engagement",
+              "selection_disparity": 0.0188,
+              "selection_ci": [
+                -0.0227,
+                0.0604
+              ],
+              "equal_opportunity_diff": 0.0219,
+              "equal_opportunity_ci": [
+                -0.0504,
+                0.0942
+              ],
+              "flag": "PASS"
+            },
+            {
+              "label": "pedagogy",
+              "selection_disparity": 0.0228,
+              "selection_ci": [
+                -0.0187,
+                0.045
+              ],
+              "equal_opportunity_diff": 0.0757,
+              "equal_opportunity_ci": [
+                -0.009,
+                0.1263
+              ],
+              "flag": "PASS"
+            },
+            {
+              "label": "technical_skill",
+              "selection_disparity": 0.0194,
+              "selection_ci": [
+                -0.0068,
+                0.0457
+              ],
+              "equal_opportunity_diff": 0.0463,
+              "equal_opportunity_ci": [
+                -0.0473,
+                0.1398
+              ],
+              "flag": "PASS"
+            }
+          ]
+        },
+        "institution_type": {
+          "worst_selection_disparity": 0.0521,
+          "worst_equal_opportunity_diff": 0.1782,
+          "failed_labels": [],
+          "warned_labels": [
+            "content_currency",
+            "resources",
+            "session_delivery",
+            "assessment_feedback",
+            "technical_skill"
+          ],
+          "per_label": [
+            {
+              "label": "content_coverage",
+              "selection_disparity": 0.0397,
+              "selection_ci": [
+                -0.0202,
+                0.0995
+              ],
+              "equal_opportunity_diff": 0.052,
+              "equal_opportunity_ci": [
+                -0.0546,
+                0.1586
+              ],
+              "flag": "PASS"
+            },
+            {
+              "label": "content_currency",
+              "selection_disparity": 0.0297,
+              "selection_ci": [
+                -0.0064,
+                0.0659
+              ],
+              "equal_opportunity_diff": 0.1052,
+              "equal_opportunity_ci": [
+                -0.0062,
+                0.2165
+              ],
+              "flag": "WARN"
+            },
+            {
+              "label": "resources",
+              "selection_disparity": 0.0146,
+              "selection_ci": [
+                -0.0225,
+                0.0518
+              ],
+              "equal_opportunity_diff": 0.1024,
+              "equal_opportunity_ci": [
+                -0.0198,
+                0.1969
+              ],
+              "flag": "WARN"
+            },
+            {
+              "label": "video_delivery",
+              "selection_disparity": 0.0374,
+              "selection_ci": [
+                -0.0205,
+                0.0953
+              ],
+              "equal_opportunity_diff": 0.0816,
+              "equal_opportunity_ci": [
+                -0.0405,
+                0.2036
+              ],
+              "flag": "PASS"
+            },
+            {
+              "label": "session_delivery",
+              "selection_disparity": 0.0349,
+              "selection_ci": [
+                -0.0106,
+                0.0799
+              ],
+              "equal_opportunity_diff": 0.1101,
+              "equal_opportunity_ci": [
+                -0.037,
+                0.2301
+              ],
+              "flag": "WARN"
+            },
+            {
+              "label": "assessment_feedback",
+              "selection_disparity": 0.0521,
+              "selection_ci": [
+                -0.0089,
+                0.1131
+              ],
+              "equal_opportunity_diff": 0.1782,
+              "equal_opportunity_ci": [
+                0.062,
+                0.2943
+              ],
+              "flag": "WARN"
+            },
+            {
+              "label": "student_engagement",
+              "selection_disparity": 0.0295,
+              "selection_ci": [
+                -0.016,
+                0.0534
+              ],
+              "equal_opportunity_diff": 0.0883,
+              "equal_opportunity_ci": [
+                -0.0404,
+                0.1955
+              ],
+              "flag": "PASS"
+            },
+            {
+              "label": "pedagogy",
+              "selection_disparity": 0.0375,
+              "selection_ci": [
+                -0.003,
+                0.0692
+              ],
+              "equal_opportunity_diff": 0.037,
+              "equal_opportunity_ci": [
+                -0.077,
+                0.0905
+              ],
+              "flag": "PASS"
+            },
+            {
+              "label": "technical_skill",
+              "selection_disparity": 0.0495,
+              "selection_ci": [
+                0.0037,
+                0.0953
+              ],
+              "equal_opportunity_diff": 0.1239,
+              "equal_opportunity_ci": [
+                -0.0041,
+                0.2519
+              ],
+              "flag": "WARN"
+            }
+          ]
+        }
+      },
+      "worst_disparity": 0.1782,
+      "n_fail": 0,
+      "n_warn": 7
+    }
+  },
+  "holdout": {
+    "per_label": {
+      "content_coverage": {
+        "prevalence": 0.1996,
+        "auc": 0.8334,
+        "pr_auc": 0.6201,
+        "threshold": null,
+        "precision": 0.5333,
+        "recall": 0.64,
+        "f1": 0.5818,
+        "positive_rate": 0.2395,
+        "ece_raw": 0.0516,
+        "ece_calibrated": 0.0493,
+        "brier_calibrated": 0.1174
+      },
+      "content_currency": {
+        "prevalence": 0.1697,
+        "auc": 0.8357,
+        "pr_auc": 0.5922,
+        "threshold": null,
+        "precision": 0.4191,
+        "recall": 0.6706,
+        "f1": 0.5158,
+        "positive_rate": 0.2715,
+        "ece_raw": 0.042,
+        "ece_calibrated": 0.0366,
+        "brier_calibrated": 0.1034
+      },
+      "resources": {
+        "prevalence": 0.2355,
+        "auc": 0.8306,
+        "pr_auc": 0.6283,
+        "threshold": null,
+        "precision": 0.4757,
+        "recall": 0.7458,
+        "f1": 0.5809,
+        "positive_rate": 0.3693,
+        "ece_raw": 0.0388,
+        "ece_calibrated": 0.0438,
+        "brier_calibrated": 0.1303
+      },
+      "video_delivery": {
+        "prevalence": 0.2595,
+        "auc": 0.7654,
+        "pr_auc": 0.5399,
+        "threshold": null,
+        "precision": 0.5062,
+        "recall": 0.6231,
+        "f1": 0.5586,
+        "positive_rate": 0.3194,
+        "ece_raw": 0.0412,
+        "ece_calibrated": 0.026,
+        "brier_calibrated": 0.1587
+      },
+      "session_delivery": {
+        "prevalence": 0.1317,
+        "auc": 0.8527,
+        "pr_auc": 0.4619,
+        "threshold": null,
+        "precision": 0.3636,
+        "recall": 0.7879,
+        "f1": 0.4976,
+        "positive_rate": 0.2854,
+        "ece_raw": 0.0256,
+        "ece_calibrated": 0.0462,
+        "brier_calibrated": 0.0942
+      },
+      "assessment_feedback": {
+        "prevalence": 0.2216,
+        "auc": 0.8558,
+        "pr_auc": 0.6656,
+        "threshold": null,
+        "precision": 0.5839,
+        "recall": 0.7207,
+        "f1": 0.6452,
+        "positive_rate": 0.2735,
+        "ece_raw": 0.0441,
+        "ece_calibrated": 0.0369,
+        "brier_calibrated": 0.118
+      },
+      "student_engagement": {
+        "prevalence": 0.1856,
+        "auc": 0.8207,
+        "pr_auc": 0.5858,
+        "threshold": null,
+        "precision": 0.55,
+        "recall": 0.5914,
+        "f1": 0.5699,
+        "positive_rate": 0.1996,
+        "ece_raw": 0.0399,
+        "ece_calibrated": 0.029,
+        "brier_calibrated": 0.1114
+      },
+      "pedagogy": {
+        "prevalence": 0.1617,
+        "auc": 0.8074,
+        "pr_auc": 0.4377,
+        "threshold": null,
+        "precision": 0.4602,
+        "recall": 0.642,
+        "f1": 0.5361,
+        "positive_rate": 0.2255,
+        "ece_raw": 0.0417,
+        "ece_calibrated": 0.0551,
+        "brier_calibrated": 0.1138
+      },
+      "technical_skill": {
+        "prevalence": 0.1457,
+        "auc": 0.7739,
+        "pr_auc": 0.362,
+        "threshold": null,
+        "precision": 0.3494,
+        "recall": 0.3973,
+        "f1": 0.3718,
+        "positive_rate": 0.1657,
+        "ece_raw": 0.0372,
+        "ece_calibrated": 0.0569,
+        "brier_calibrated": 0.1184
+      }
+    },
+    "macro_auc": 0.8195,
+    "macro_pr_auc": 0.5437,
+    "macro_f1": 0.5397,
+    "max_ece": 0.0569,
+    "severity": {
+      "n": 558,
+      "accuracy": 0.4211,
+      "majority_baseline": 0.3889
+    },
+    "evidence": {
+      "predicted_gaps": 1177,
+      "with_evidence": 1177,
+      "coverage": 1.0,
+      "true_positive_gaps": 558,
+      "hit_rate": 0.7867,
+      "item_precision": 0.4504,
+      "hits_per_area": {
+        "content_coverage": [
+          62,
+          64
+        ],
+        "content_currency": [
+          28,
+          57
+        ],
+        "resources": [
+          21,
+          88
+        ],
+        "video_delivery": [
+          81,
+          81
+        ],
+        "session_delivery": [
+          49,
+          52
+        ],
+        "assessment_feedback": [
+          75,
+          80
+        ],
+        "student_engagement": [
+          55,
+          55
+        ],
+        "pedagogy": [
+          51,
+          52
+        ],
+        "technical_skill": [
+          17,
+          29
+        ]
+      }
+    },
+    "results_valid_share": 1.0
+  },
+  "final_model": {
+    "thresholds": {
+      "content_coverage": 0.26,
+      "content_currency": 0.23,
+      "resources": 0.22,
+      "video_delivery": 0.26,
+      "session_delivery": 0.24,
+      "assessment_feedback": 0.3,
+      "student_engagement": 0.29,
+      "pedagogy": 0.29,
+      "technical_skill": 0.19
+    },
+    "severity_cuts": {
+      "content_coverage": [
+        0.486,
+        0.486
+      ],
+      "content_currency": [
+        0.301,
+        0.367
+      ],
+      "resources": [
+        0.364,
+        0.66
+      ],
+      "video_delivery": [
+        0.364,
+        0.8
+      ],
+      "session_delivery": [
+        0.331,
+        0.417
+      ],
+      "assessment_feedback": [
+        0.469,
+        0.544
+      ],
+      "student_engagement": [
+        0.333,
+        0.702
+      ],
+      "pedagogy": [
+        0.577,
+        0.586
+      ],
+      "technical_skill": [
+        0.286,
+        0.286
+      ]
+    },
+    "best_iterations": {
+      "content_coverage": 50,
+      "content_currency": 41,
+      "resources": 116,
+      "video_delivery": 76,
+      "session_delivery": 61,
+      "assessment_feedback": 66,
+      "student_engagement": 118,
+      "pedagogy": 87,
+      "technical_skill": 77
+    }
+  },
+  "top_features": [
+    [
+      "likert_resources_mean",
+      0.1152
+    ],
+    [
+      "likert_feedback_mean",
+      0.1045
+    ],
+    [
+      "attendance_rate",
+      0.0963
+    ],
+    [
+      "notes_late_share",
+      0.0953
+    ],
+    [
+      "slides_share",
+      0.0892
+    ],
+    [
+      "grading_turnaround_hours",
+      0.0885
+    ],
+    [
+      "evaluation_response_rate",
+      0.0814
+    ],
+    [
+      "text_notes_9",
+      0.0792
+    ],
+    [
+      "text_notes_8",
+      0.0753
+    ],
+    [
+      "contact_minutes_ratio",
+      0.075
+    ],
+    [
+      "likert_organisation_mean",
+      0.0725
+    ],
+    [
+      "likert_clarity_mean",
+      0.0664
+    ]
+  ],
+  "gates": {
+    "macro_auc": {
+      "value": 0.8113,
+      "target": ">= 0.7",
+      "pass": true
+    },
+    "min_label_auc": {
+      "value": 0.7797,
+      "target": ">= 0.65",
+      "pass": true
+    },
+    "max_ece": {
+      "value": 0.0326,
+      "target": "<= 0.05",
+      "pass": true
+    },
+    "evidence_coverage": {
+      "value": 1.0,
+      "target": ">= 1.0",
+      "pass": true
+    },
+    "results_schema_valid": {
+      "value": 1.0,
+      "target": ">= 1.0",
+      "pass": true
+    },
+    "fairness_fail_flags": {
+      "value": 0,
+      "target": "<= 0",
+      "pass": true
+    }
+  },
+  "bundle_reload_check": true,
+  "registry": {
+    "promoted": true,
+    "reason": "manual promotion: MVP drops MiniLM: no AUC gain on synthetic data, lighter on the 8 GB server"
+  },
+  "runtime_seconds": 619.6
+}

@@ -2,8 +2,18 @@
 
 The SMARTEP model: predicts educator gaps from The Classroom's evidence packages and recommends reskilling.
 Workplan: `DOCS/SMARTEP Model Development Workplan (Nov 2026 - Jun 2027).docx`. Phases 0 (refactor), 1 (synthetic
-data generator v2) and **2 (MVP gap model v0.1)** are done; Phase 3 (serving and integration) is next.
-Model card: `docs/model-card-v0.1.md`.
+data generator v2) and 2 (MVP gap model v0.1) are done; **Phase 3** (the SMARTEP API) is built and tested
+locally, not yet deployed. Model card: `docs/model-card-v0.1.md` · API contract: `docs/api.md` · runbook:
+`docs/runbook-serving.md`.
+
+## The API service
+
+```bash
+python -m uv sync --extra dev --extra serve
+SMARTEP_ORGS='{}' python -m uv run uvicorn smartep.api.app:app --port 8000   # GET /health
+python -m uv run python scripts/benchmark_serving.py --n 50                  # latency and memory (G3)
+python -m uv run python scripts/export_model.py                              # champion -> models/gap-model/
+```
 
 ## Setup
 
@@ -57,6 +67,8 @@ python -m uv run python scripts/export_schemas.py   # after changing a contract
 | `smartep/registry/` | Model bundles and champion/challenger promotion |
 | `smartep/training/gap_model.py` | Gap model: CV, calibration, thresholds, severity, evidence and fairness scoring, bundle |
 | `smartep/serve/predict.py` | Evidence package in, validated AssessmentResult out |
+| `smartep/api/` | The SMARTEP API: signed webhook, SQLite job queue, worker, results callback, stand-in Classroom |
+| `models/gap-model/` | The served model bundle (exported champion), baked into the Docker image |
 | `pipelines/train.py` | The one training command (legacy or gap model, by `data.source`) |
 | `docs/decision-log.md` | Design decisions per phase, and why |
 | `docs/data-sheet-synthetic-v2.md` | Every generator rule, label rule, G1 result and limitation |

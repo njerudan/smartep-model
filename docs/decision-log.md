@@ -2,6 +2,34 @@
 
 One entry per design decision: what was decided, and why. Feeds the methodology chapter.
 
+## 2026-11-18 · Phase 3: serving (SMARTEP API)
+
+Contract for The Classroom: `docs/api.md`. Operations: `docs/runbook-serving.md`.
+
+**Found at the start:** the M1 ingest API was never built (`api.smartep.co.ke` has no DNS; the Dokploy
+Application "smartep.co.ke" is idle), and The Classroom has no assessment code yet (no package builder,
+webhook or results endpoint). Phase 3 therefore builds the whole SMARTEP side and tests it end to end
+against a stand-in Classroom (`smartep/api/fake_classroom.py`); the real end-to-end check waits for The
+Classroom's endpoints.
+
+| Decision | Why |
+|---|---|
+| Ingest API, queue, worker and callback in this repo, one container | One deployable for a solo developer; the worker shares the loaded model with the web server |
+| SQLite job queue on a volume, no Redis | 8 GB server, low volume (a few hundred packages per period); survives restarts |
+| Webhook signature: HMAC-SHA256 over `"{timestamp}.{body}"`, ±5 min tolerance, per-org secret; headers `X-SMARTEP-Org/Timestamp/Signature` | The spec did not define signing; this is the common webhook pattern and blocks replays |
+| Same 401 for unknown org and bad signature | Does not reveal which organisations exist |
+| Per-org allow-lists for download and callback hosts, https only | A package or webhook cannot steer SMARTEP to an arbitrary URL or leak the org API key |
+| Verify sha256, byte size, schema v1.0, packageId and orgRef before predicting | Spec §5; refuses tampered or misrouted packages |
+| Permanent vs temporary failures; retries 30 s → 6 h until 24 h after acceptance | Spec: results within 24 h; 4xx other than 408/429 will not fix itself |
+| Package never stored; result body deleted after delivery; httpx URL logging off | Data minimisation (spec §12); presigned URLs carry access signatures |
+| Champion bundle committed to `models/gap-model/` (2.4 MB) and baked into the image | Reproducible deploys without a model store; `scripts/export_model.py` refreshes it |
+| Golden fixtures (8 packages + expected probabilities) and a quality check in tests | A change that alters predictions or ships a weaker bundle fails CI |
+| CI builds the image and smoke-tests the container | Docker is not installed locally |
+
+**G3 (local part) passed:** 50 holdout packages end to end, all delivered and valid; processing p50 70 ms,
+p95 141 ms, max 215 ms (target < 30 s); peak memory 241 MB (target < 1.5 GB); webhook ack 13 ms median.
+Not yet done: deployment and the end-to-end test with The Classroom.
+
 ## 2026-11-18 · MVP drops MiniLM text features
 
 **Decision (Daniel Njeru):** serve the MVP without MiniLM; use TF-IDF + SVD text features instead

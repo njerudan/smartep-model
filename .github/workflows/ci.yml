@@ -13,9 +13,29 @@ jobs:
       - uses: astral-sh/setup-uv@v6
         with:
           python-version: "3.11"
-      - name: Install (core + dev; torch-free)
-        run: uv sync --locked --extra dev
+      - name: Install (core + serve + dev; torch-free)
+        run: uv sync --locked --extra dev --extra serve
       - name: Lint
         run: uv run ruff check .
       - name: Tests (fusion test is skipped without torch)
         run: uv run pytest -q
+
+  image:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build the API image
+        run: docker build -t smartep-api:ci .
+      - name: Smoke test the container
+        run: |
+          docker run -d --name api -p 8000:8000 -e SMARTEP_ORGS='{}' smartep-api:ci
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:8000/health; then echo; break; fi
+            sleep 2
+          done
+          curl -fsS http://127.0.0.1:8000/health | grep -q '"status":"ok"'
+          test "$(curl -s -o /dev/null -w '%{http_code}' -X POST http://127.0.0.1:8000/v1/packages -d '{}')" = "401"
+          docker stats --no-stream api
+          docker logs api
+          docker image ls smartep-api:ci

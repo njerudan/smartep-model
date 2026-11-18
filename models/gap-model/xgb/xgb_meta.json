@@ -1,0 +1,35 @@
+{
+  "labels": [
+    "content_coverage",
+    "content_currency",
+    "resources",
+    "video_delivery",
+    "session_delivery",
+    "assessment_feedback",
+    "student_engagement",
+    "pedagogy",
+    "technical_skill"
+  ],
+  "constants": {},
+  "trained": [
+    "content_coverage",
+    "content_currency",
+    "resources",
+    "video_delivery",
+    "session_delivery",
+    "assessment_feedback",
+    "student_engagement",
+    "pedagogy",
+    "technical_skill"
+  ],
+  "params": {
+    "n_estimators": 600,
+    "max_depth": 3,
+    "learning_rate": 0.05,
+    "subsample": 0.8,
+    "colsample_bytree": 0.8,
+    "min_child_weight": 2
+  },
+  "early_stopping_rounds": 40,
+  "seed": 42
+}
