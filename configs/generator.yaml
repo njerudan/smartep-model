@@ -1,0 +1,45 @@
+# Synthetic data generator v2: evidence packages in schema v1.0 with a planted, documented signal.
+# Rules and their rationale: docs/data-sheet-synthetic-v2.md.
+seed: 20261119
+n_educators: 1700            # x 3 periods = 5,100 packages
+n_institutions: 12
+
+periods:                      # Kenyan semester calendar
+  - {name: "Sep-Dec 2025", start: "2025-09-08"}
+  - {name: "Jan-Apr 2026", start: "2026-01-12"}
+  - {name: "May-Aug 2026", start: "2026-05-11"}
+weeks_per_period: 12
+sessions_per_week: 2
+
+period_drift_sd: 0.25        # traits vary a little from one period to the next
+observation_noise_sd: 0.8   # package evidence = period traits + this noise; sets task difficulty
+trait_correlations: null     # null = defaults in smartep/synth/traits.py; or [{a, b, r}, ...]
+
+# Labels
+label_noise_sd: 0.35         # noise added to each area's deficiency score before thresholding
+label_flip_rate: 0.10        # assessor disagreement; prevalence is preserved
+prevalence:
+  content_coverage: 0.20
+  content_currency: 0.20
+  resources: 0.25
+  video_delivery: 0.25
+  session_delivery: 0.15
+  assessment_feedback: 0.25
+  student_engagement: 0.20
+  pedagogy: 0.20
+  technical_skill: 0.15
+
+# Optional injected bias, off by default (used to test that the fairness audit notices it)
+bias:
+  seniority_digital_effect: 0.0
+
+classroom_test_packages: 500 # whole educators held out for The Classroom's end-to-end tests
+
+checks:                      # gate G1
+  prevalence_bounds: [0.10, 0.40]
+  oracle_min_auc: 0.80
+  noise_max_deviation: 0.05
+  evidence_probe_min_auc: 0.65   # soft target, reported only
+
+output:
+  dir: data/synthetic_v2      # dataset lands in <dir>/<config hash>/

@@ -1,8 +1,8 @@
 # smartep-model
 
 The SMARTEP model: predicts educator gaps from The Classroom's evidence packages and recommends reskilling.
-Workplan: `DOCS/SMARTEP Model Development Workplan (Nov 2026 - Jun 2027).docx`. This repo is at **Phase 0**
-(foundations and refactor of the Colab baseline).
+Workplan: `DOCS/SMARTEP Model Development Workplan (Nov 2026 - Jun 2027).docx`. Phase 0 (refactor of the Colab
+baseline) and **Phase 1** (synthetic data generator v2) are done; Phase 2 (MVP gap model) is next.
 
 ## Setup
 
@@ -22,6 +22,7 @@ Extras: `research` (torch), `text` (MiniLM sentence embeddings), `tracking` (MLf
 ## Run
 
 ```bash
+python -m uv run python -m pipelines.generate_data --config configs/generator.yaml   # 5,100 packages + G1 checks (~3 min)
 python -m uv run python -m pipelines.train --config configs/train_xgb.yaml
 python -m uv run python -m pipelines.train --config configs/train_fusion.yaml
 python -m uv run python -m pipelines.train --config configs/train_xgb.yaml --set data.n_educators=500 --set seed=7
@@ -43,19 +44,21 @@ python -m uv run python scripts/export_schemas.py   # after changing a contract
 |---|---|
 | `smartep/contracts/` | Pydantic models of the evidence package (spec §3.2) and AssessmentResult (spec §6); the 9 gap areas |
 | `schemas/` | JSON Schema exported from the contracts, to compare with The Classroom's Zod schema |
-| `smartep/synth/` | `legacy.py`: the Colab simulation (Phase 0 only). Generator v2 arrives in Phase 1 |
+| `smartep/synth/` | Generator v2: traits, label rules, package builder, evidence rules, G1 checks, dataset I/O. `legacy.py` is the Colab simulation (Phase 0 comparison only) |
 | `smartep/data/` | Grouped train/validation/test split; dataset fingerprints |
-| `smartep/features/` | Tabular, text, weekly sequence and watch-history features |
+| `smartep/features/` | Structured package features (`package.py`), plus tabular, text, sequence and watch-history features |
 | `smartep/models/` | Multi-label XGBoost, calibration, thresholds and severity, fusion model and encoders |
 | `smartep/explain/` | SHAP values (XGBoost TreeSHAP) and per-row explanations |
 | `smartep/evaluate/` | Metrics, fairness audit, gates, personas, pilot measures (SUS, competency gain), report |
 | `smartep/recommend/` | LinUCB bandit, fairness re-ranking, ranking metrics |
 | `smartep/registry/` | Model bundles and champion/challenger promotion |
 | `pipelines/train.py` | The one training command |
-| `docs/decision-log.md` | What changed from the Colab baseline, and why |
+| `docs/decision-log.md` | Design decisions per phase, and why |
+| `docs/data-sheet-synthetic-v2.md` | Every generator rule, label rule, G1 result and limitation |
 
 ## Status of results
 
-The Phase 0 data source (`legacy_colab`) assigns gap labels at random, independently of every feature,
-exactly as the notebook did. Test AUC near 0.5 is therefore the expected, correct result. It shows the
-pipeline does not leak test information. Meaningful model numbers start with generator v2 in Phase 1.
+- `pipelines.train` still uses the Phase 0 data source (`legacy_colab`), whose labels are random, so test
+  AUC near 0.5 is the expected result there. Phase 2 switches training to generator v2.
+- Generator v2 passes gate G1: oracle AUC 0.916, structured-feature probe 0.827, noise 0.501 (data sheet §4).
+  These are synthetic results: they test the pipeline, not usefulness with real educators.

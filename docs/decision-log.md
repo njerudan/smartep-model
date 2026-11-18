@@ -2,6 +2,28 @@
 
 One entry per design decision: what was decided, and why. Feeds the methodology chapter.
 
+## 2026-11-18 · Phase 1: synthetic data generator v2
+
+Details and every rule: `docs/data-sheet-synthetic-v2.md`.
+
+| Decision | Why |
+|---|---|
+| Generate evidence packages in schema v1.0, not tables | The same feature code then runs on synthetic and real packages; no training/serving skew |
+| Six latent traits drive both the evidence and the labels | Gives a known, documented link to recover; the notebook's labels had none |
+| Labels from period traits; package from period traits + observation noise (sd 0.8) | Separates what is true from what the evidence shows; one setting controls task difficulty |
+| Observation noise 0.8 | Without it, structured features reached 0.897 vs oracle 0.913, so Phase 2's 0.70 target and Phase 5's ablation would be meaningless. 0.8 gives a probe of 0.827 and leaves room for text features |
+| 10% assessor-disagreement flips, prevalence preserved | Real labels from admins will be noisy; perfect labels would overstate achievable AUC |
+| Severity from the margin above threshold (tertiles) | Gives the three contract levels a consistent meaning |
+| Ground-truth evidence read back from the package by rules | Every gap needs evidence (contract); rules are the reference for Phase 2 evidence mapping |
+| Hold out 501 packages (whole educators) for The Classroom | End-to-end tests use data no model was trained on |
+| Group attributes not linked to traits by default; optional injected bias | Lets the fairness audit be tested both ways |
+| Gate G1 includes an oracle check, a noise check and an evidence probe | Shows the signal exists, the check does not leak, and the signal reaches the observable fields |
+| Structured package features (`smartep/features/package.py`) written now | Needed for the evidence probe; Phase 2 extends it with text and evidence mapping |
+| Dataset written under `data/synthetic_v2/<config hash>/` | A model can record exactly which data it was trained on |
+
+**G1 passed** (2026-11-18): 5,100/5,100 packages valid; prevalence 0.150–0.251; 9,382 gaps all with evidence;
+oracle 0.916; noise 0.501; evidence probe 0.827. 39 tests pass.
+
 ## 2026-11-18 · Phase 0: refactor of the Colab baseline
 
 Source: `Source Code.txt` (Colab notebook). Workplan section 3 and Appendix A.
