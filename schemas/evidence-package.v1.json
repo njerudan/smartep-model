@@ -1,0 +1,1166 @@
+{
+  "$defs": {
+    "Attendance": {
+      "additionalProperties": false,
+      "properties": {
+        "present": {
+          "minimum": 0,
+          "title": "Present",
+          "type": "integer"
+        },
+        "recorded": {
+          "minimum": 0,
+          "title": "Recorded",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "recorded",
+        "present"
+      ],
+      "title": "Attendance",
+      "type": "object"
+    },
+    "CatalogueEntry": {
+      "additionalProperties": false,
+      "properties": {
+        "catalogueRef": {
+          "title": "Catalogueref",
+          "type": "string"
+        },
+        "certification": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Certification"
+        },
+        "cost": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Cost"
+            },
+            {
+              "const": "free",
+              "type": "string"
+            }
+          ],
+          "title": "Cost"
+        },
+        "description": {
+          "title": "Description",
+          "type": "string"
+        },
+        "durationText": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Durationtext"
+        },
+        "level": {
+          "anyOf": [
+            {
+              "enum": [
+                "beginner",
+                "intermediate",
+                "advanced"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Level"
+        },
+        "mode": {
+          "enum": [
+            "online",
+            "in_person",
+            "hybrid"
+          ],
+          "title": "Mode",
+          "type": "string"
+        },
+        "nextStartDate": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Nextstartdate"
+        },
+        "provider": {
+          "title": "Provider",
+          "type": "string"
+        },
+        "skills": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Skills",
+          "type": "array"
+        },
+        "source": {
+          "enum": [
+            "classroom",
+            "institution"
+          ],
+          "title": "Source",
+          "type": "string"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "url": {
+          "title": "Url",
+          "type": "string"
+        }
+      },
+      "required": [
+        "catalogueRef",
+        "source",
+        "title",
+        "provider",
+        "description",
+        "skills",
+        "mode",
+        "cost",
+        "url"
+      ],
+      "title": "CatalogueEntry",
+      "type": "object"
+    },
+    "ClassroomInfo": {
+      "additionalProperties": false,
+      "properties": {
+        "baseUrl": {
+          "title": "Baseurl",
+          "type": "string"
+        },
+        "orgRef": {
+          "title": "Orgref",
+          "type": "string"
+        },
+        "resultsCallbackUrl": {
+          "title": "Resultscallbackurl",
+          "type": "string"
+        }
+      },
+      "required": [
+        "orgRef",
+        "baseUrl",
+        "resultsCallbackUrl"
+      ],
+      "title": "ClassroomInfo",
+      "type": "object"
+    },
+    "Cost": {
+      "additionalProperties": false,
+      "properties": {
+        "amount": {
+          "minimum": 0,
+          "title": "Amount",
+          "type": "number"
+        },
+        "currency": {
+          "const": "KES",
+          "title": "Currency",
+          "type": "string"
+        }
+      },
+      "required": [
+        "amount",
+        "currency"
+      ],
+      "title": "Cost",
+      "type": "object"
+    },
+    "Course": {
+      "additionalProperties": false,
+      "properties": {
+        "courseRef": {
+          "title": "Courseref",
+          "type": "string"
+        },
+        "description": {
+          "title": "Description",
+          "type": "string"
+        },
+        "enrolledStudents": {
+          "minimum": 0,
+          "title": "Enrolledstudents",
+          "type": "integer"
+        },
+        "level": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Level"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "courseRef",
+        "title",
+        "description",
+        "enrolledStudents"
+      ],
+      "title": "Course",
+      "type": "object"
+    },
+    "DeliveryIndicators": {
+      "additionalProperties": false,
+      "properties": {
+        "assignmentsGraded": {
+          "minimum": 0,
+          "title": "Assignmentsgraded",
+          "type": "integer"
+        },
+        "contactMinutesDelivered": {
+          "minimum": 0,
+          "title": "Contactminutesdelivered",
+          "type": "number"
+        },
+        "contactMinutesPlanned": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Contactminutesplanned"
+        },
+        "gradingTurnaroundApproximate": {
+          "title": "Gradingturnaroundapproximate",
+          "type": "boolean"
+        },
+        "gradingTurnaroundMedianHours": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Gradingturnaroundmedianhours"
+        },
+        "questionsAnsweredWithin72h": {
+          "minimum": 0,
+          "title": "Questionsansweredwithin72H",
+          "type": "integer"
+        },
+        "questionsAsked": {
+          "minimum": 0,
+          "title": "Questionsasked",
+          "type": "integer"
+        },
+        "sessionsDelivered": {
+          "minimum": 0,
+          "title": "Sessionsdelivered",
+          "type": "integer"
+        },
+        "sessionsPlanned": {
+          "minimum": 0,
+          "title": "Sessionsplanned",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "sessionsPlanned",
+        "sessionsDelivered",
+        "contactMinutesDelivered",
+        "assignmentsGraded",
+        "gradingTurnaroundApproximate",
+        "questionsAsked",
+        "questionsAnsweredWithin72h"
+      ],
+      "title": "DeliveryIndicators",
+      "type": "object"
+    },
+    "Document": {
+      "additionalProperties": false,
+      "properties": {
+        "extractedText": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Extractedtext"
+        },
+        "mimeType": {
+          "title": "Mimetype",
+          "type": "string"
+        },
+        "postedAt": {
+          "title": "Postedat",
+          "type": "string"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "title",
+        "mimeType",
+        "postedAt"
+      ],
+      "title": "Document",
+      "type": "object"
+    },
+    "Educator": {
+      "additionalProperties": false,
+      "properties": {
+        "discipline": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Discipline"
+        },
+        "educatorRef": {
+          "title": "Educatorref",
+          "type": "string"
+        },
+        "seniority": {
+          "anyOf": [
+            {
+              "enum": [
+                "assistant_lecturer",
+                "lecturer",
+                "senior_lecturer",
+                "professor"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Seniority"
+        }
+      },
+      "required": [
+        "educatorRef"
+      ],
+      "title": "Educator",
+      "type": "object"
+    },
+    "EvaluationQuestion": {
+      "additionalProperties": false,
+      "properties": {
+        "comments": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Comments"
+        },
+        "dimension": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Dimension"
+        },
+        "distribution": {
+          "anyOf": [
+            {
+              "items": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Distribution"
+        },
+        "kind": {
+          "enum": [
+            "likert5",
+            "yes_no",
+            "text"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "prompt": {
+          "title": "Prompt",
+          "type": "string"
+        },
+        "questionRef": {
+          "title": "Questionref",
+          "type": "string"
+        }
+      },
+      "required": [
+        "questionRef",
+        "prompt",
+        "kind"
+      ],
+      "title": "EvaluationQuestion",
+      "type": "object"
+    },
+    "EvaluationRound": {
+      "additionalProperties": false,
+      "properties": {
+        "belowThreshold": {
+          "title": "Belowthreshold",
+          "type": "boolean"
+        },
+        "closedAt": {
+          "title": "Closedat",
+          "type": "string"
+        },
+        "enrolled": {
+          "minimum": 0,
+          "title": "Enrolled",
+          "type": "integer"
+        },
+        "questions": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/EvaluationQuestion"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Questions"
+        },
+        "responses": {
+          "minimum": 0,
+          "title": "Responses",
+          "type": "integer"
+        },
+        "roundRef": {
+          "title": "Roundref",
+          "type": "string"
+        }
+      },
+      "required": [
+        "roundRef",
+        "closedAt",
+        "responses",
+        "enrolled",
+        "belowThreshold"
+      ],
+      "title": "EvaluationRound",
+      "type": "object"
+    },
+    "Institution": {
+      "additionalProperties": false,
+      "properties": {
+        "country": {
+          "const": "KE",
+          "title": "Country",
+          "type": "string"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "type": {
+          "enum": [
+            "university",
+            "tvet",
+            "college"
+          ],
+          "title": "Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "country",
+        "type"
+      ],
+      "title": "Institution",
+      "type": "object"
+    },
+    "Lesson": {
+      "additionalProperties": false,
+      "properties": {
+        "attendance": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Attendance"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "deliveredStatus": {
+          "enum": [
+            "delivered",
+            "not_delivered",
+            "unknown"
+          ],
+          "title": "Deliveredstatus",
+          "type": "string"
+        },
+        "documents": {
+          "items": {
+            "$ref": "#/$defs/Document"
+          },
+          "title": "Documents",
+          "type": "array"
+        },
+        "durationMinutes": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Durationminutes"
+        },
+        "lessonRef": {
+          "title": "Lessonref",
+          "type": "string"
+        },
+        "notes": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Notes"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "scheduledAt": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Scheduledat"
+        },
+        "slides": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/Slides"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Slides"
+        },
+        "taughtByThisEducator": {
+          "title": "Taughtbythiseducator",
+          "type": "boolean"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "videos": {
+          "items": {
+            "$ref": "#/$defs/Video"
+          },
+          "title": "Videos",
+          "type": "array"
+        }
+      },
+      "required": [
+        "lessonRef",
+        "title",
+        "taughtByThisEducator",
+        "deliveredStatus",
+        "documents",
+        "videos"
+      ],
+      "title": "Lesson",
+      "type": "object"
+    },
+    "Notes": {
+      "additionalProperties": false,
+      "properties": {
+        "firstPostedAt": {
+          "title": "Firstpostedat",
+          "type": "string"
+        },
+        "lastEditedAt": {
+          "title": "Lasteditedat",
+          "type": "string"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "text",
+        "firstPostedAt",
+        "lastEditedAt"
+      ],
+      "title": "Notes",
+      "type": "object"
+    },
+    "Period": {
+      "additionalProperties": false,
+      "properties": {
+        "endsAt": {
+          "title": "Endsat",
+          "type": "string"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "startsAt": {
+          "title": "Startsat",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "startsAt",
+        "endsAt"
+      ],
+      "title": "Period",
+      "type": "object"
+    },
+    "Plan": {
+      "additionalProperties": false,
+      "properties": {
+        "items": {
+          "items": {
+            "$ref": "#/$defs/PlanItem"
+          },
+          "title": "Items",
+          "type": "array"
+        },
+        "plannedContactHours": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Plannedcontacthours"
+        },
+        "status": {
+          "enum": [
+            "approved",
+            "submitted",
+            "draft"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "status",
+        "items"
+      ],
+      "title": "Plan",
+      "type": "object"
+    },
+    "PlanItem": {
+      "additionalProperties": false,
+      "properties": {
+        "itemRef": {
+          "title": "Itemref",
+          "type": "string"
+        },
+        "learningOutcomes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Learningoutcomes",
+          "type": "array"
+        },
+        "lessonRefs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Lessonrefs",
+          "type": "array"
+        },
+        "plannedSessions": {
+          "minimum": 0,
+          "title": "Plannedsessions",
+          "type": "integer"
+        },
+        "requiresNotes": {
+          "title": "Requiresnotes",
+          "type": "boolean"
+        },
+        "requiresVideo": {
+          "title": "Requiresvideo",
+          "type": "boolean"
+        },
+        "skills": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Skills",
+          "type": "array"
+        },
+        "topic": {
+          "title": "Topic",
+          "type": "string"
+        },
+        "week": {
+          "title": "Week",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "itemRef",
+        "week",
+        "topic",
+        "learningOutcomes",
+        "skills",
+        "plannedSessions",
+        "requiresNotes",
+        "requiresVideo",
+        "lessonRefs"
+      ],
+      "title": "PlanItem",
+      "type": "object"
+    },
+    "ReskillingPreferences": {
+      "additionalProperties": false,
+      "properties": {
+        "location": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Location"
+        },
+        "maxCostKes": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Maxcostkes"
+        },
+        "preferredModes": {
+          "items": {
+            "enum": [
+              "online",
+              "in_person",
+              "hybrid"
+            ],
+            "type": "string"
+          },
+          "title": "Preferredmodes",
+          "type": "array"
+        },
+        "trustedWebProviders": {
+          "items": {
+            "$ref": "#/$defs/TrustedWebProvider"
+          },
+          "title": "Trustedwebproviders",
+          "type": "array"
+        },
+        "webResultsPerSkill": {
+          "default": 3,
+          "minimum": 0,
+          "title": "Webresultsperskill",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "trustedWebProviders",
+        "preferredModes"
+      ],
+      "title": "ReskillingPreferences",
+      "type": "object"
+    },
+    "Slides": {
+      "additionalProperties": false,
+      "properties": {
+        "firstPostedAt": {
+          "title": "Firstpostedat",
+          "type": "string"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "text",
+        "firstPostedAt"
+      ],
+      "title": "Slides",
+      "type": "object"
+    },
+    "Transcript": {
+      "additionalProperties": false,
+      "properties": {
+        "language": {
+          "title": "Language",
+          "type": "string"
+        },
+        "segments": {
+          "items": {
+            "$ref": "#/$defs/TranscriptSegment"
+          },
+          "title": "Segments",
+          "type": "array"
+        }
+      },
+      "required": [
+        "language",
+        "segments"
+      ],
+      "title": "Transcript",
+      "type": "object"
+    },
+    "TranscriptSegment": {
+      "additionalProperties": false,
+      "properties": {
+        "end": {
+          "minimum": 0,
+          "title": "End",
+          "type": "number"
+        },
+        "start": {
+          "minimum": 0,
+          "title": "Start",
+          "type": "number"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "start",
+        "end",
+        "text"
+      ],
+      "title": "TranscriptSegment",
+      "type": "object"
+    },
+    "TrustedWebProvider": {
+      "additionalProperties": false,
+      "properties": {
+        "domain": {
+          "title": "Domain",
+          "type": "string"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "domain"
+      ],
+      "title": "TrustedWebProvider",
+      "type": "object"
+    },
+    "Video": {
+      "additionalProperties": false,
+      "properties": {
+        "durationSeconds": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Durationseconds"
+        },
+        "postedAt": {
+          "title": "Postedat",
+          "type": "string"
+        },
+        "provider": {
+          "enum": [
+            "upload",
+            "youtube",
+            "vimeo",
+            "google_drive",
+            "generic"
+          ],
+          "title": "Provider",
+          "type": "string"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "transcript": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Transcript"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "videoRef": {
+          "title": "Videoref",
+          "type": "string"
+        },
+        "viewing": {
+          "$ref": "#/$defs/Viewing"
+        }
+      },
+      "required": [
+        "videoRef",
+        "title",
+        "provider",
+        "postedAt",
+        "viewing"
+      ],
+      "title": "Video",
+      "type": "object"
+    },
+    "Viewing": {
+      "additionalProperties": false,
+      "properties": {
+        "completionRate": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Completionrate",
+          "type": "number"
+        },
+        "furthestPctHistogram": {
+          "items": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "title": "Furthestpcthistogram",
+          "type": "array"
+        },
+        "medianFurthestPct": {
+          "maximum": 100,
+          "minimum": 0,
+          "title": "Medianfurthestpct",
+          "type": "number"
+        },
+        "viewers": {
+          "minimum": 0,
+          "title": "Viewers",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "viewers",
+        "medianFurthestPct",
+        "completionRate",
+        "furthestPctHistogram"
+      ],
+      "title": "Viewing",
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "classroom": {
+      "$ref": "#/$defs/ClassroomInfo"
+    },
+    "course": {
+      "$ref": "#/$defs/Course"
+    },
+    "createdAt": {
+      "title": "Createdat",
+      "type": "string"
+    },
+    "deliveryIndicators": {
+      "$ref": "#/$defs/DeliveryIndicators"
+    },
+    "educator": {
+      "$ref": "#/$defs/Educator"
+    },
+    "evaluations": {
+      "items": {
+        "$ref": "#/$defs/EvaluationRound"
+      },
+      "title": "Evaluations",
+      "type": "array"
+    },
+    "institution": {
+      "$ref": "#/$defs/Institution"
+    },
+    "lessons": {
+      "items": {
+        "$ref": "#/$defs/Lesson"
+      },
+      "title": "Lessons",
+      "type": "array"
+    },
+    "packageId": {
+      "title": "Packageid",
+      "type": "string"
+    },
+    "period": {
+      "$ref": "#/$defs/Period"
+    },
+    "plan": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Plan"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "previousPackages": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Previouspackages",
+      "type": "array"
+    },
+    "reskillingCatalogue": {
+      "items": {
+        "$ref": "#/$defs/CatalogueEntry"
+      },
+      "title": "Reskillingcatalogue",
+      "type": "array"
+    },
+    "reskillingPreferences": {
+      "$ref": "#/$defs/ReskillingPreferences"
+    },
+    "schemaVersion": {
+      "const": "1.0",
+      "title": "Schemaversion",
+      "type": "string"
+    },
+    "trigger": {
+      "enum": [
+        "evaluation_round_closed",
+        "period_end",
+        "manual"
+      ],
+      "title": "Trigger",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "packageId",
+    "trigger",
+    "createdAt",
+    "classroom",
+    "institution",
+    "period",
+    "educator",
+    "course",
+    "plan",
+    "lessons",
+    "deliveryIndicators",
+    "evaluations",
+    "reskillingCatalogue",
+    "reskillingPreferences",
+    "previousPackages"
+  ],
+  "title": "EvidencePackage",
+  "type": "object"
+}

@@ -1,0 +1,51 @@
+[project]
+name = "smartep-model"
+version = "0.0.1"
+description = "SMARTEP gap-prediction and reskilling model for The Classroom evidence packages"
+readme = "README.md"
+requires-python = ">=3.11,<3.12"
+dependencies = [
+    "numpy>=1.26,<3",
+    "pandas>=2.2",
+    "scikit-learn>=1.5",
+    "xgboost>=2.1",
+    "pydantic>=2.8",
+    "pyyaml>=6.0",
+    "joblib>=1.4",
+]
+
+[project.optional-dependencies]
+# Deep-learning modalities and the attention fusion model (research track, Phase 5).
+research = ["torch>=2.4"]
+# Sentence-embedding text encoder (MiniLM). Pulls in torch.
+text = ["sentence-transformers>=3.0"]
+# Experiment tracking with a local MLflow file store.
+tracking = ["mlflow>=2.16"]
+dev = ["pytest>=8.0", "ruff>=0.6"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["smartep", "pipelines"]
+
+[tool.uv.sources]
+torch = [{ index = "pytorch-cpu" }]
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["slow: end-to-end pipeline runs"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "NPY"]
+ignore = ["E501"]

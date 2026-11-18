@@ -1,0 +1,61 @@
+# Phase 0 baseline: the Colab simulation, refactored. Labels are random in this data source, so expect
+# test AUC near 0.5; the run checks the pipeline, not the model.
+run_name: xgb-baseline
+seed: 42
+
+data:
+  source: legacy_colab      # Phase 1 adds: synthetic_v2 (evidence packages, schema v1.0)
+  n_educators: 2000
+
+split:                      # grouped by educator; one split for every model
+  val_size: 0.15
+  test_size: 0.15
+
+features:
+  text:
+    encoder: tfidf_svd      # none | tfidf_svd | minilm (needs the "text" extra)
+    dim: 16
+  sequence:
+    seq_len_weeks: 5
+  watch_history:
+    max_neighbors: 15
+
+models:
+  xgb:
+    n_estimators: 400
+    max_depth: 4
+    learning_rate: 0.08
+    subsample: 0.8
+    colsample_bytree: 0.8
+    early_stopping_rounds: 30
+  fusion:
+    enabled: false
+
+calibration:
+  method: isotonic          # isotonic | none
+
+fairness:
+  group: years_experience   # Phase 1: seniority, discipline, institution type
+  numeric: true
+  n_buckets: 3
+  max_disparity: 0.10
+
+recommender:
+  enabled: true
+  alpha: 0.5
+  passes: 3
+
+personas:
+  n_clusters: 4
+
+gates:                      # G2 targets; only meaningful on generator v2 data
+  macro_auc: 0.70
+  min_label_auc: 0.65
+  max_ece: 0.05
+  max_disparity: 0.10
+
+tracking:
+  mlflow: false             # true logs to ./mlruns (needs the "tracking" extra)
+
+output:
+  dir: artifacts

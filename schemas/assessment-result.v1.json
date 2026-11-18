@@ -1,0 +1,485 @@
+{
+  "$defs": {
+    "Evidence": {
+      "additionalProperties": false,
+      "properties": {
+        "atSeconds": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Atseconds"
+        },
+        "note": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Note"
+        },
+        "quote": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Quote"
+        },
+        "ref": {
+          "title": "Ref",
+          "type": "string"
+        },
+        "source": {
+          "enum": [
+            "plan",
+            "notes",
+            "slides",
+            "document",
+            "transcript",
+            "viewing",
+            "delivery",
+            "evaluation"
+          ],
+          "title": "Source",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source",
+        "ref"
+      ],
+      "title": "Evidence",
+      "type": "object"
+    },
+    "Gap": {
+      "additionalProperties": false,
+      "properties": {
+        "area": {
+          "enum": [
+            "content_coverage",
+            "content_currency",
+            "resources",
+            "video_delivery",
+            "session_delivery",
+            "assessment_feedback",
+            "student_engagement",
+            "pedagogy",
+            "technical_skill"
+          ],
+          "title": "Area",
+          "type": "string"
+        },
+        "confidence": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Confidence",
+          "type": "number"
+        },
+        "description": {
+          "title": "Description",
+          "type": "string"
+        },
+        "evidence": {
+          "items": {
+            "$ref": "#/$defs/Evidence"
+          },
+          "minItems": 1,
+          "title": "Evidence",
+          "type": "array"
+        },
+        "gapRef": {
+          "title": "Gapref",
+          "type": "string"
+        },
+        "relatedPlanItems": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Relatedplanitems",
+          "type": "array"
+        },
+        "severity": {
+          "enum": [
+            "low",
+            "medium",
+            "high"
+          ],
+          "title": "Severity",
+          "type": "string"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "gapRef",
+        "area",
+        "title",
+        "description",
+        "severity",
+        "confidence",
+        "relatedPlanItems",
+        "evidence"
+      ],
+      "title": "Gap",
+      "type": "object"
+    },
+    "ModelInfo": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "trainingData": {
+          "enum": [
+            "synthetic",
+            "synthetic+real"
+          ],
+          "title": "Trainingdata",
+          "type": "string"
+        },
+        "validated": {
+          "title": "Validated",
+          "type": "boolean"
+        },
+        "version": {
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "version",
+        "trainingData",
+        "validated"
+      ],
+      "title": "ModelInfo",
+      "type": "object"
+    },
+    "RecommendedCourse": {
+      "additionalProperties": false,
+      "properties": {
+        "catalogueRef": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Catalogueref"
+        },
+        "certification": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Certification"
+        },
+        "cost": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ResultCost"
+            },
+            {
+              "enum": [
+                "free",
+                "unknown"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Cost"
+        },
+        "durationText": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Durationtext"
+        },
+        "isTrustedWebProvider": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Istrustedwebprovider"
+        },
+        "location": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Location"
+        },
+        "matchScore": {
+          "title": "Matchscore",
+          "type": "number"
+        },
+        "mode": {
+          "enum": [
+            "online",
+            "in_person",
+            "hybrid"
+          ],
+          "title": "Mode",
+          "type": "string"
+        },
+        "nextStartDate": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Nextstartdate"
+        },
+        "provider": {
+          "title": "Provider",
+          "type": "string"
+        },
+        "retrievedAt": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Retrievedat"
+        },
+        "source": {
+          "enum": [
+            "classroom",
+            "institution",
+            "web"
+          ],
+          "title": "Source",
+          "type": "string"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "url": {
+          "title": "Url",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source",
+        "title",
+        "provider",
+        "url",
+        "mode",
+        "matchScore"
+      ],
+      "title": "RecommendedCourse",
+      "type": "object"
+    },
+    "Reskilling": {
+      "additionalProperties": false,
+      "properties": {
+        "addressesGaps": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Addressesgaps",
+          "type": "array"
+        },
+        "courses": {
+          "items": {
+            "$ref": "#/$defs/RecommendedCourse"
+          },
+          "title": "Courses",
+          "type": "array"
+        },
+        "priority": {
+          "enum": [
+            "low",
+            "medium",
+            "high"
+          ],
+          "title": "Priority",
+          "type": "string"
+        },
+        "rationale": {
+          "title": "Rationale",
+          "type": "string"
+        },
+        "recommendationRef": {
+          "title": "Recommendationref",
+          "type": "string"
+        },
+        "skillArea": {
+          "title": "Skillarea",
+          "type": "string"
+        },
+        "skillFramework": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SkillFramework"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "recommendationRef",
+        "skillArea",
+        "rationale",
+        "addressesGaps",
+        "priority",
+        "courses"
+      ],
+      "title": "Reskilling",
+      "type": "object"
+    },
+    "ResultCost": {
+      "additionalProperties": false,
+      "properties": {
+        "amount": {
+          "minimum": 0,
+          "title": "Amount",
+          "type": "number"
+        },
+        "currency": {
+          "title": "Currency",
+          "type": "string"
+        }
+      },
+      "required": [
+        "amount",
+        "currency"
+      ],
+      "title": "ResultCost",
+      "type": "object"
+    },
+    "SkillFramework": {
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "title": "Code",
+          "type": "string"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "code"
+      ],
+      "title": "SkillFramework",
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "gaps": {
+      "items": {
+        "$ref": "#/$defs/Gap"
+      },
+      "title": "Gaps",
+      "type": "array"
+    },
+    "generatedAt": {
+      "title": "Generatedat",
+      "type": "string"
+    },
+    "model": {
+      "$ref": "#/$defs/ModelInfo"
+    },
+    "overallConfidence": {
+      "maximum": 1,
+      "minimum": 0,
+      "title": "Overallconfidence",
+      "type": "number"
+    },
+    "packageId": {
+      "title": "Packageid",
+      "type": "string"
+    },
+    "reskilling": {
+      "items": {
+        "$ref": "#/$defs/Reskilling"
+      },
+      "title": "Reskilling",
+      "type": "array"
+    },
+    "schemaVersion": {
+      "const": "1.0",
+      "title": "Schemaversion",
+      "type": "string"
+    },
+    "summary": {
+      "title": "Summary",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "packageId",
+    "model",
+    "generatedAt",
+    "summary",
+    "overallConfidence",
+    "gaps",
+    "reskilling"
+  ],
+  "title": "AssessmentResult",
+  "type": "object"
+}

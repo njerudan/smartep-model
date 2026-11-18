@@ -1,0 +1,16 @@
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+dist/
+build/
+
+# Generated data, models and reports (rebuilt from configs + seed)
+data/
+artifacts/
+mlruns/
+
+.env
+.ipynb_checkpoints/

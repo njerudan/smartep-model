@@ -1,0 +1,108 @@
+{
+  "schemaVersion": "1.0",
+  "packageId": "pkg_0001",
+  "trigger": "evaluation_round_closed",
+  "createdAt": "2026-11-18T09:00:00Z",
+  "classroom": {
+    "orgRef": "org_demo",
+    "baseUrl": "https://app.example.test",
+    "resultsCallbackUrl": "https://app.example.test/v1/assessment/results"
+  },
+  "institution": {"name": "Demo University", "country": "KE", "type": "university"},
+  "period": {"name": "Sep-Dec 2026", "startsAt": "2026-09-07", "endsAt": "2026-12-11"},
+  "educator": {"educatorRef": "edu_7f3a", "discipline": "Computing", "seniority": "lecturer"},
+  "course": {
+    "courseRef": "crs_db101",
+    "title": "Databases and SQL",
+    "level": "Undergraduate",
+    "description": "Relational modelling and SQL.",
+    "enrolledStudents": 42
+  },
+  "plan": {
+    "status": "approved",
+    "plannedContactHours": 36,
+    "items": [
+      {
+        "itemRef": "pi_1",
+        "week": 1,
+        "topic": "Relational model",
+        "learningOutcomes": ["Explain relations and keys"],
+        "skills": ["data modelling"],
+        "plannedSessions": 2,
+        "requiresNotes": true,
+        "requiresVideo": true,
+        "lessonRefs": ["les_1"]
+      }
+    ]
+  },
+  "lessons": [
+    {
+      "lessonRef": "les_1",
+      "title": "Relations and keys",
+      "taughtByThisEducator": true,
+      "scheduledAt": "2026-09-08T08:00:00Z",
+      "durationMinutes": 120,
+      "deliveredStatus": "delivered",
+      "notes": {"text": "A relation is a set of tuples...", "firstPostedAt": "2026-09-07", "lastEditedAt": "2026-09-09"},
+      "slides": [{"text": "Keys: primary, candidate, foreign", "firstPostedAt": "2026-09-07"}],
+      "documents": [{"title": "Reading list", "mimeType": "application/pdf", "postedAt": "2026-09-07"}],
+      "videos": [
+        {
+          "videoRef": "vid_1",
+          "title": "Keys explained",
+          "provider": "youtube",
+          "durationSeconds": 900,
+          "postedAt": "2026-09-08",
+          "transcript": {"language": "en", "segments": [{"start": 0, "end": 12.5, "text": "Today we look at keys."}]},
+          "viewing": {"viewers": 30, "medianFurthestPct": 64, "completionRate": 0.4, "furthestPctHistogram": [2, 3, 5, 8, 12]}
+        }
+      ],
+      "attendance": {"recorded": 40, "present": 33}
+    }
+  ],
+  "deliveryIndicators": {
+    "sessionsPlanned": 24,
+    "sessionsDelivered": 21,
+    "contactMinutesPlanned": 2880,
+    "contactMinutesDelivered": 2520,
+    "assignmentsGraded": 3,
+    "gradingTurnaroundMedianHours": 96,
+    "gradingTurnaroundApproximate": true,
+    "questionsAsked": 18,
+    "questionsAnsweredWithin72h": 11
+  },
+  "evaluations": [
+    {
+      "roundRef": "ev_mid",
+      "closedAt": "2026-10-23",
+      "responses": 25,
+      "enrolled": 42,
+      "belowThreshold": false,
+      "questions": [
+        {"questionRef": "q1", "prompt": "The lecturer explained concepts clearly", "dimension": "clarity", "kind": "likert5", "distribution": [1, 2, 6, 10, 6]},
+        {"questionRef": "q9", "prompt": "Any other comments?", "kind": "text", "comments": ["More practical SQL exercises please."]}
+      ]
+    }
+  ],
+  "reskillingCatalogue": [
+    {
+      "catalogueRef": "cat_tpack",
+      "source": "classroom",
+      "title": "Teaching with Digital Tools (TPACK)",
+      "provider": "The Classroom",
+      "description": "Designing technology-rich lessons.",
+      "skills": ["pedagogy", "digital tools"],
+      "level": "beginner",
+      "mode": "online",
+      "cost": "free",
+      "url": "https://app.example.test/courses/tpack"
+    }
+  ],
+  "reskillingPreferences": {
+    "trustedWebProviders": [{"name": "Example Academy", "domain": "academy.example.test"}],
+    "preferredModes": ["online"],
+    "maxCostKes": 20000,
+    "webResultsPerSkill": 3
+  },
+  "previousPackages": []
+}
