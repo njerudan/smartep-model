@@ -15,9 +15,11 @@ cv:
 
 features:
   text:
-    encoder: minilm         # minilm (needs the "text" extra) | tfidf_svd | none
+    # MVP: tfidf_svd (no model download, light on the 8 GB server). MiniLM added no AUC on synthetic data
+    # (decision log, 2026-11-18); revisit with real comments in Phase 7. Options: minilm | tfidf_svd | none
+    encoder: tfidf_svd
     dim: 16                 # per text group (comments, notes, transcripts)
-    cache_path: ~/.cache/smartep/minilm-embeddings.pkl   # outside OneDrive; speeds up re-runs
+    cache_path: ~/.cache/smartep/minilm-embeddings.pkl   # used only with minilm; outside OneDrive
 
 models:
   xgb:

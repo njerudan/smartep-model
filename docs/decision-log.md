@@ -2,9 +2,25 @@
 
 One entry per design decision: what was decided, and why. Feeds the methodology chapter.
 
+## 2026-11-18 · MVP drops MiniLM text features
+
+**Decision (Daniel Njeru):** serve the MVP without MiniLM; use TF-IDF + SVD text features instead
+(`features.text.encoder: tfidf_svd`). MiniLM stays in the code as an option.
+
+**Why:** on synthetic data MiniLM added no discrimination (no-text 0.810 vs MiniLM 0.811 macro AUC), while it
+needs a 90 MB model in memory on the 8 GB CPU server and slowed the first run by ~18 minutes. This matches
+item 3 of the MVP cut list.
+
+**Result:** the TF-IDF model is as good or better on every measure (CV macro AUC 0.811 ± 0.001, holdout 0.820,
+worst ECE 0.033, evidence hit rate 0.765 vs 0.744, 0 fairness FAIL flags) and passes G2. Bundle
+`gap-xgb-20261118T130130Z-3f9573`, promoted with the new `--promote-reason` override (a candidate that does
+not score higher is promoted only if every gate passes; the reason is written to the registry history).
+TF-IDF's edge on evidence probably comes from templated synthetic text; compare again on pilot data.
+
 ## 2026-11-18 · Phase 2: MVP gap model v0.1
 
-Model card: `docs/model-card-v0.1.md`. Bundle `artifacts/gap-xgb-20261118T122125Z-d7dc5b` (registry champion).
+Model card: `docs/model-card-v0.1.md`. First bundle `artifacts/gap-xgb-20261118T122125Z-d7dc5b` (MiniLM text);
+superseded the same day by the TF-IDF bundle (entry above).
 
 | Decision | Why |
 |---|---|

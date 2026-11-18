@@ -24,8 +24,8 @@ Extras: `research` (torch), `text` (MiniLM sentence embeddings), `tracking` (MLf
 
 ```bash
 python -m uv run python -m pipelines.generate_data --config configs/generator.yaml   # 5,100 packages + G1 checks (~3 min)
-python -m uv sync --extra dev --extra research --extra text                          # MiniLM for the gap model
-python -m uv run python -m pipelines.train --config configs/gap_model.yaml --promote-on-new-data   # model v0.1 (~12 min first run)
+python -m uv sync --extra dev --extra text                                         # optional: MiniLM text features
+python -m uv run python -m pipelines.train --config configs/gap_model.yaml    # model v0.1, TF-IDF text (~10 min)
 python -m uv run python -m pipelines.train --config configs/train_xgb.yaml
 python -m uv run python -m pipelines.train --config configs/train_fusion.yaml
 python -m uv run python -m pipelines.train --config configs/train_xgb.yaml --set data.n_educators=500 --set seed=7
@@ -63,8 +63,8 @@ python -m uv run python scripts/export_schemas.py   # after changing a contract
 
 ## Status of results
 
-- Gap model v0.1 (`configs/gap_model.yaml`) passes gate G2: CV macro AUC 0.811 ± 0.001, holdout 0.821,
-  worst-area ECE 0.032, evidence hit rate 0.74, no fairness failures. Synthetic and unvalidated.
+- Gap model v0.1 (`configs/gap_model.yaml`, TF-IDF text) passes gate G2: CV macro AUC 0.811 ± 0.001, holdout 0.820,
+  worst-area ECE 0.033, evidence hit rate 0.77, no fairness failures. Synthetic and unvalidated.
 - The Phase 0 configs (`train_xgb.yaml`, `train_fusion.yaml`) still use the legacy Colab data, whose labels
   are random, so AUC near 0.5 is expected there.
 - Generator v2 passes gate G1: oracle AUC 0.916, structured-feature probe 0.827, noise 0.501 (data sheet §4).

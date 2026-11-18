@@ -92,11 +92,11 @@ def _train_fusion(cfg, tables, ids, split, X_tab, X_text, Y, labels, seed):
     return result, model.state_dict(), {"calibrator": calibrator, "thresholds": thresholds}
 
 
-def run(cfg: dict, output_dir: Path, promote_on_new_data: bool = False) -> dict:
+def run(cfg: dict, output_dir: Path, promote_on_new_data: bool = False, promote_reason: str | None = None) -> dict:
     if cfg["data"]["source"] == "synthetic_v2":
         from smartep.training.gap_model import run_gap_model
 
-        return run_gap_model(cfg, output_dir, promote_on_new_data)
+        return run_gap_model(cfg, output_dir, promote_on_new_data, promote_reason)
     return run_legacy(cfg, output_dir, promote_on_new_data)
 
 
@@ -254,10 +254,12 @@ def main(argv=None) -> None:
     parser.add_argument("--set", action="append", default=[], metavar="KEY=VALUE", help="override a config value")
     parser.add_argument("--output-dir", default=None, help="defaults to output.dir in the config")
     parser.add_argument("--promote-on-new-data", action="store_true")
+    parser.add_argument("--promote-reason", default=None,
+                        help="promote even without a higher score, if every gate passes; the reason is recorded")
     args = parser.parse_args(argv)
     cfg = load_config(args.config, args.set)
     out = Path(args.output_dir or cfg["output"]["dir"])
-    summary = run(cfg, out, args.promote_on_new_data)
+    summary = run(cfg, out, args.promote_on_new_data, args.promote_reason)
     print(json.dumps({"version": summary["version"], "gates": {k: g["pass"] for k, g in summary["gates"].items()},
                       "runtime_seconds": summary["runtime_seconds"]}, indent=2))
 

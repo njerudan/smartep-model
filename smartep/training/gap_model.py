@@ -267,7 +267,8 @@ def check_gates(cv: dict, holdout: dict, targets: dict) -> dict:
 
 # --- the run ------------------------------------------------------------------------------------------------
 
-def run_gap_model(cfg: dict, output_dir: Path, promote_on_new_data: bool = False) -> dict:
+def run_gap_model(cfg: dict, output_dir: Path, promote_on_new_data: bool = False,
+                  promote_reason: str | None = None) -> dict:
     from smartep.serve.predict import GapPredictor
 
     t0 = time.perf_counter()
@@ -357,7 +358,8 @@ def run_gap_model(cfg: dict, output_dir: Path, promote_on_new_data: bool = False
     promoted, reason = promote_if_better(output_dir / "registry", {
         "version": version, "bundle_path": str(bundle_dir), "macro_auc": cv["macro_auc"]["mean"],
         "fairness_ok": gates["fairness_fail_flags"]["pass"], "data_hash": data_hash,
-    }, allow_new_data=promote_on_new_data)
+    }, allow_new_data=promote_on_new_data,
+        override_reason=promote_reason if all(g["pass"] for g in gates.values()) else None)
     summary = {"version": version, "config_hash": cfg_hash, "data_hash": data_hash, "manifest": manifest,
                "data": {"dir": str(data_dir), "train_pool": int(pool.sum()), "holdout": int(hold.sum())},
                "cv": cv, "holdout": holdout, "final_model": {"thresholds": dict(zip(LABELS, final.thresholds.round(3).tolist(), strict=True)),

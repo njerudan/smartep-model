@@ -65,6 +65,9 @@ def test_promotion_rules(tmp_path):
     assert decide({**cand, "macro_auc": 0.9}, champ, False)[0]
     assert not decide({**cand, "data_hash": "d2", "macro_auc": 0.9}, champ, False)[0]
     assert decide({**cand, "data_hash": "d2"}, champ, True)[0]
+    promoted, reason = decide(cand, champ, False, override_reason="lighter model for deployment")
+    assert promoted and reason.startswith("manual promotion")
+    assert not decide({**cand, "fairness_ok": False}, champ, False, override_reason="x")[0]
 
     assert promote_if_better(tmp_path, cand)[0]
     assert not promote_if_better(tmp_path, {**cand, "version": "v2"})[0]
