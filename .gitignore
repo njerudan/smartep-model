@@ -8,9 +8,9 @@ dist/
 build/
 
 # Generated data, models and reports (rebuilt from configs + seed)
-data/
-artifacts/
-mlruns/
+/data/
+/artifacts/
+/mlruns/
 
 .env
 .ipynb_checkpoints/
