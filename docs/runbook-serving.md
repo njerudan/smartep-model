@@ -19,6 +19,19 @@ processing p95 141 ms, peak memory 241 MB, start-up 7 s.
 
 Secrets live only in Dokploy's environment settings, never in the repo.
 
+## Current deployment (2026-11-18)
+
+| Item | Value |
+|---|---|
+| URL | https://api.smartep.co.ke (Cloudflare A record `api` → 169.58.185.165, proxied; Let's Encrypt via Dokploy) |
+| Dokploy | project Smartep / production, Application "SMARTEP API" (`smartep-api-q9kspp`, applicationId `ky794anKDLLpMKY5XwylN`) |
+| Source | public Git `https://github.com/njerudan/smartep-model.git`, branch `main`, Dockerfile build; **auto-deploy off** (redeploy in Dokploy after a push) |
+| Volume | `smartep-api-data` → `/data` |
+| Env | `SMARTEP_ORGS={}` (no organisation yet), `SMARTEP_ADMIN_TOKEN` (copy in `SMARTEP/.env` as `SMARTEP_API_ADMIN_TOKEN`) |
+| First deploy | commit `40c7ee1`, model `gap-xgb-20261118T130130Z-3f9573`, build ~2 min |
+
+To connect an institution: add its entry to `SMARTEP_ORGS` (docs/api.md §5) in Dokploy and redeploy.
+
 ## Deploy (Dokploy, cloud.smartep.co.ke)
 
 1. Application from GitHub `njerudan/smartep-model`, branch `main`, build type **Dockerfile**, port 8000.

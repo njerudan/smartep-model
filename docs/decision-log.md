@@ -28,7 +28,13 @@ Classroom's endpoints.
 
 **G3 (local part) passed:** 50 holdout packages end to end, all delivered and valid; processing p50 70 ms,
 p95 141 ms, max 215 ms (target < 30 s); peak memory 241 MB (target < 1.5 GB); webhook ack 13 ms median.
-Not yet done: deployment and the end-to-end test with The Classroom.
+**Deployed 2026-11-18** (user approved): Dokploy Application "SMARTEP API" at https://api.smartep.co.ke from
+commit `40c7ee1`, Dockerfile build, volume `/data`, no organisations configured yet. Checks: `/health` 200
+with model `gap-xgb-20261118T130130Z-3f9573`; unsigned webhook 401; status endpoint 401 without token;
+HTTP → HTTPS 301. A new application was created rather than reusing the idle "smartep.co.ke" one, which is
+left for the product site. Auto-deploy is off: a push does not change production until it is redeployed.
+**Still open for G3:** the end-to-end test with The Classroom, once its package webhook and results
+endpoint exist.
 
 ## 2026-11-18 · MVP drops MiniLM text features
 
